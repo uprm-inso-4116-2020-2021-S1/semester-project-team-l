@@ -25,31 +25,32 @@ public class UserAccount
     public String getUserName() {
         return userName;
     }
-    public void String setUsername(String userName) {
+    public void setUsername(String userName) {
         this.userName = userName;
     }
     public String getPassword() {
-        return password();
+        return password;
     }
-    public void String setPassword(String password) {
+
+    public void setPassword(String password) {
         this.password = password;
     }
     public String getGender() {
-        return gender();
+        return gender;
     }
-    public String void setGender(String gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
     public int getAge() {
         return age;
     }
-    public int void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
     @Override
     public String toString()
     {
-        return "Person [id=" + id + ", name=" + name + ", age=" + age + "]";
+        return userName;
     }
 }
