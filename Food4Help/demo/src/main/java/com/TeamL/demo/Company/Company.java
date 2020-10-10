@@ -1,5 +1,7 @@
 package com.TeamL.demo.Company;
 
+import com.TeamL.demo.Food.Food;
+
 import java.util.List;
 
 public class Company implements CompanyInt {
@@ -58,18 +60,19 @@ public class Company implements CompanyInt {
         this.address = address;
     }
 
+
     @Override
-    public void setCompanyName() {
+    public void message() {
 
     }
 
     @Override
-    public void addFood(String food) {
+    public void addFood(Food food) {
 
     }
 
     @Override
-    public void removeFood(String food) {
+    public void removeFood(Food food) {
 
     }
 }

@@ -1,10 +1,13 @@
 package com.TeamL.demo.Company;
 
+import com.TeamL.demo.Food.Food;
+
 public interface CompanyInt {
 
-    void setCompanyName();
-    void addFood(String food);
-    void removeFood(String food);
+    void message();
+    void addFood(Food food);
+    void removeFood(Food food);
 
 
 }
+
