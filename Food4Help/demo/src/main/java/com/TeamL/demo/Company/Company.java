@@ -10,9 +10,9 @@ public class Company implements CompanyInt {
     public String userName;
     public String password;
     public String companyName;
-    public List<Address> address;
+    public Address address;
 
-    public Company(Long id, String userName, String password, String companyName, List<Address> address) {
+    public Company(Long id, String userName, String password, String companyName, Address address) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -52,11 +52,11 @@ public class Company implements CompanyInt {
         this.companyName = companyName;
     }
 
-    public List<Address> getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(List<Address> address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
