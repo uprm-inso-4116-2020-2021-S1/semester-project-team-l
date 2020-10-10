@@ -1,4 +1,4 @@
-package com.TeamL.demo;
+package com.TeamL.demo.login;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
