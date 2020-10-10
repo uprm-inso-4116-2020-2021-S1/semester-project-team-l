@@ -1,4 +1,4 @@
-package com.TeamL.demo;
+package com.TeamL.demo.User;
 
 
 import java.util.Set;
