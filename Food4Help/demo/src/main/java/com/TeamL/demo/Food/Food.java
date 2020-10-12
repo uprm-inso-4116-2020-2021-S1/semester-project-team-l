@@ -9,8 +9,6 @@ public class Food
     private int amount;
     private int SKU;
 
-
-
     public Food()
     {
         name = "";
@@ -18,7 +16,6 @@ public class Food
         amount = 0;
         SKU = 0;
     }
-
     public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU)
     {
         this.name = FoodName;

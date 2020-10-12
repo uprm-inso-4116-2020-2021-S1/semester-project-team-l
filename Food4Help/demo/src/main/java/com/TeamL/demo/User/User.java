@@ -1,8 +1,11 @@
 package com.TeamL.demo.User;
 
 
+import com.TeamL.demo.Company.EntityInt;
+import com.TeamL.demo.Food.Food;
+
 import java.util.Set;
-public class User
+public class User implements EntityInt
 {
     public static final String GENDER_MALE = "M";
     public static final String GENDER_FEMALE = "F";
@@ -92,5 +95,20 @@ public class User
     public String toString()
     {
         return "hello";
+    }
+
+    @Override
+    public void message() {
+
+    }
+
+    @Override
+    public void addFood(Food food) {
+
+    }
+
+    @Override
+    public void removeFood(Food food) {
+
     }
 }

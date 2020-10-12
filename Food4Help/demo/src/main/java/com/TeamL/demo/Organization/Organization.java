@@ -1,22 +1,21 @@
-package com.TeamL.demo.Company;
+package com.TeamL.demo.Organization;
 
+import com.TeamL.demo.Company.Address;
+import com.TeamL.demo.Company.EntityInt;
 import com.TeamL.demo.Food.Food;
 
-import java.util.List;
-
-public class Company implements EntityInt {
-
+public class Organization implements EntityInt {
     public Long id;
     public String userName;
     public String password;
-    public String companyName;
+    public String orgName;
     public Address address;
 
-    public Company(Long id, String userName, String password, String companyName, Address address) {
+    public Organization(Long id, String userName, String password, String orgName, Address address) {
         this.id = id;
         this.userName = userName;
         this.password = password;
-        this.companyName = companyName;
+        this.orgName = orgName;
         this.address = address;
     }
 
@@ -44,12 +43,12 @@ public class Company implements EntityInt {
         this.password = password;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
     public Address getAddress() {
@@ -59,7 +58,6 @@ public class Company implements EntityInt {
     public void setAddress(Address address) {
         this.address = address;
     }
-
 
     @Override
     public void message() {
