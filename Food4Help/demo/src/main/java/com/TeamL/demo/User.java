@@ -11,6 +11,7 @@ public class User
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private String gender;
     private int age;
     private Set<Role> roles;
@@ -21,6 +22,14 @@ public class User
         this.email = email;
         this.gender = gender;
         this.age = age;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
