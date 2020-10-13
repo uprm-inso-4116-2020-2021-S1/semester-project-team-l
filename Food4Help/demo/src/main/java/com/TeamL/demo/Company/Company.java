@@ -2,8 +2,6 @@ package com.TeamL.demo.Company;
 
 import com.TeamL.demo.Food.Food;
 
-import java.util.List;
-
 public class Company implements EntityInt {
 
     public Long id;

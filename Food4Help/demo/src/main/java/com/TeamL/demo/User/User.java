@@ -3,9 +3,14 @@ package com.TeamL.demo.User;
 
 import com.TeamL.demo.Company.EntityInt;
 import com.TeamL.demo.Food.Food;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Set;
-public class User implements EntityInt
+import java.util.Collection;
+import java.util.Collections;
+
+public class User implements UserDetails, EntityInt
 {
     public static final String GENDER_MALE = "M";
     public static final String GENDER_FEMALE = "F";
@@ -17,8 +22,11 @@ public class User implements EntityInt
     private String password;
     private String gender;
     private int age;
-    private Set<Role> roles;
+    private UserRole userRole = UserRole.USER;
+    private boolean locked = false;
+    private Boolean enabled = false;
 
+    //Constructor
     public User(String firstName, String lastName, String email, String gender, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,10 +35,9 @@ public class User implements EntityInt
         this.age = age;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
+
+    //Getter and setter
     public void setPassword(String password) {
         this.password = password;
     }
@@ -83,12 +90,64 @@ public class User implements EntityInt
         this.age = age;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    //Implemented methods from UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.name());
+        return Collections.singletonList(simpleGrantedAuthority);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override
@@ -97,6 +156,7 @@ public class User implements EntityInt
         return "hello";
     }
 
+    //Implemented methods from EntityInt
     @Override
     public void message() {
 
