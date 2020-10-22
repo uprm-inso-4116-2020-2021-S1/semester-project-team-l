@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: 'About Us', url: '#' },
+  { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '#' },
   { title: 'Register Your Company', url: '#' },
   { title: 'Review', url: '#' },
