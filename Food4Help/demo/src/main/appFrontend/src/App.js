@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 const sections = [
   { title: 'About Us', url: '/aboutus' },
-  { title: 'What we do', url: '#' },
-  { title: 'Register Your Company', url: '#' },
-  { title: 'Review', url: '#' },
+  { title: 'What we do', url: '/whatwedo' },
+  { title: 'Register Your Company', url: '/register' },
+  { title: 'Review', url: '/reviews' },
 ];
 
 const photo = {
@@ -41,7 +41,7 @@ const sidebar = {
   ],
 };
 
-export default function Blog() {
+export default function HomePage() {
   const classes = useStyles();
 
   return (

@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Header from '../HP/Header';
+import Footer from '../HP/Footer';
 
 const themeLight = createMuiTheme({
   palette: {
@@ -19,17 +21,6 @@ const themeLight = createMuiTheme({
     }
   }
 });
-
-//const themeDark = createMuiTheme({
-//  palette: {
-//    background: {
-//      default: "#cfe8fc"
-//    },
-//    text: {
-//      primary: "#2222"
-//    }
-//  }
-//});
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(9),
@@ -49,20 +40,33 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  mainGrid: {
+      marginTop: theme.spacing(3),
+    },
 }));
+
+const sections = [
+  { title: 'Home Page', url: '/' },
+  { title: 'What we do', url: '/whatwedo' },
+  { title: 'Register Your Company', url: '/register' },
+  { title: 'Review', url: '/reviews' },
+];
 export default function AboutUs() {
   const classes = useStyles();
-  //const [light, setLight] = React.useState(true);
   return (
-    <Container fixed="true">
+    <React.Fragment>
+    <Container maxWidth="lg">
       <MuiThemeProvider theme={themeLight}>
+      <Header title="About Us" sections={sections} />
       <CssBaseline />
       <div className={classes.paper} >
-         <Typography variant="h1" component="div" style={{ height: '100vh' }} >
-          About Us
+         <Typography variant="body1" component="div" style={{ height: '100vh' }} >
+          This is About Us official page.
         </Typography>
       </div>
       </MuiThemeProvider>
     </Container>
+    <Footer title="" description="Food4Help" />
+    </React.Fragment>
   );
 }
