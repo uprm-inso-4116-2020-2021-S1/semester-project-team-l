@@ -21,7 +21,7 @@ public class ConfirmationTokenService {
         confirmationTokenRepositories.deleteById(id);
     }
     public Optional<ConfirmationToken> findConfirmationToken(String token){
-        return confirmationTokenRepositories.findConfirmationToken(token);
+        return confirmationTokenRepositories.findBy(token);
     }
 
 }
