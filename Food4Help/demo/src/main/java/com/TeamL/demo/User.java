@@ -7,19 +7,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Collections;
-
-@Entity(name = "Users")
+@Component
 @Document(collection = "users")
 public class User implements UserDetails
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public static final String GENDER_MALE = "M";
     public static final String GENDER_FEMALE = "F";
 
@@ -42,6 +36,9 @@ public class User implements UserDetails
         this.email = email;
         this.gender = gender;
         this.age = age;
+    }
+
+    public User(){
     }
 
 
