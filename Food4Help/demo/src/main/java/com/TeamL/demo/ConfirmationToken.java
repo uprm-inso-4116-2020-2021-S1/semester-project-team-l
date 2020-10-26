@@ -1,19 +1,27 @@
-package com.TeamL.demo.User.ConfirmationToken;
+package com.TeamL.demo;
 
-import com.TeamL.demo.User.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
-
+@Entity
 public class ConfirmationToken {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String confirmationToken;
 
     private LocalDate localDate;
 
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
+
+
 
     public ConfirmationToken(User user) {
         this.user = user;

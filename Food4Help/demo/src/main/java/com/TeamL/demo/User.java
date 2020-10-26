@@ -1,17 +1,25 @@
-package com.TeamL.demo.User;
-
-
-import com.TeamL.demo.Company.EntityInt;
-import com.TeamL.demo.Food.Food;
+package com.TeamL.demo;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Collections;
 
-public class User implements UserDetails, EntityInt
+@Entity(name = "Users")
+@Document(collection = "users")
+public class User implements UserDetails
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public static final String GENDER_MALE = "M";
     public static final String GENDER_FEMALE = "F";
 
@@ -24,9 +32,10 @@ public class User implements UserDetails, EntityInt
     private int age;
     private UserRole userRole = UserRole.USER;
     private boolean locked = false;
-    private Boolean enabled = false;
+    private boolean enabled = false;
 
     //Constructor
+    @PersistenceConstructor
     public User(String firstName, String lastName, String email, String gender, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -156,19 +165,4 @@ public class User implements UserDetails, EntityInt
         return "hello";
     }
 
-    //Implemented methods from EntityInt
-    @Override
-    public void message() {
-
-    }
-
-    @Override
-    public void addFood(Food food) {
-
-    }
-
-    @Override
-    public void removeFood(Food food) {
-
-    }
 }

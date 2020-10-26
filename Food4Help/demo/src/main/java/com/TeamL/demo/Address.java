@@ -1,4 +1,4 @@
-package com.TeamL.demo.Company;
+package com.TeamL.demo;
 
 public class Address {
 

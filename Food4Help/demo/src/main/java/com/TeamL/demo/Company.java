@@ -1,6 +1,4 @@
-package com.TeamL.demo.Company;
-
-import com.TeamL.demo.Food.Food;
+package com.TeamL.demo;
 
 public class Company implements EntityInt {
 

@@ -1,7 +1,5 @@
-package com.TeamL.demo.User;
+package com.TeamL.demo;
 
-import com.TeamL.demo.User.ConfirmationToken.ConfirmationToken;
-import com.TeamL.demo.User.ConfirmationToken.ConfirmationTokenService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,15 +10,14 @@ import org.springframework.stereotype.Service;
 import java.text.MessageFormat;
 import java.util.Optional;
 @Service
-
 public class UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserRepository userRepositories;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, ConfirmationTokenService confirmationTokenService, EmailService emailService) {
-        this.userRepository = userRepository;
+    public UserService(UserRepository userRepositories, ConfirmationTokenService confirmationTokenService, EmailService emailService) {
+        this.userRepositories = userRepositories;
         this.confirmationTokenService = confirmationTokenService;
         this.emailService = emailService;
     }
@@ -29,7 +26,7 @@ public class UserService implements UserDetailsService {
         BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
         final String encryptedPass = passEncoder.encode(user.getPassword());
         user.setPassword(encryptedPass);
-        final User createdUser = userRepository.save(user);
+        final User createdUser = userRepositories.save(user);
         final ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
     }
@@ -37,7 +34,7 @@ public class UserService implements UserDetailsService {
     void confirmUser(ConfirmationToken confirmationToken){
         final User user = confirmationToken.getUser();
         user.setEnabled(true);
-        userRepository.save(user);
+        userRepositories.save(user);
         confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
 
     }
@@ -58,7 +55,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        final Optional<User> optionalUser = userRepository.findByEmail(email);
+        final Optional<User> optionalUser = userRepositories.findByEmail(email);
 
         if (optionalUser.isPresent()) {
             return optionalUser.get();

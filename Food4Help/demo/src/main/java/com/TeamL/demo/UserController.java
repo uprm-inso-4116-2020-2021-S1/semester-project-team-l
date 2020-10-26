@@ -1,16 +1,17 @@
-package com.TeamL.demo.User;
+package com.TeamL.demo;
 
-import com.TeamL.demo.User.ConfirmationToken.ConfirmationToken;
-import com.TeamL.demo.User.ConfirmationToken.ConfirmationTokenService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
-
+@RestController
 public class UserController {
+    @Autowired
     private final UserService userService;
-
     private final ConfirmationTokenService confirmationTokenService;
 
     public UserController(UserService userService, ConfirmationTokenService confirmationTokenService) {

@@ -1,4 +1,4 @@
-package com.TeamL.demo.Food;
+package com.TeamL.demo;
 
 
 import java.util.Set;

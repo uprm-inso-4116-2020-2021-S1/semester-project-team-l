@@ -1,4 +1,4 @@
-package com.TeamL.demo.login;
+package com.TeamL.demo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
