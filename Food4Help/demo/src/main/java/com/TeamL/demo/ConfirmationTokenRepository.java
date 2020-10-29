@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ConfirmationTokenRepository extends MongoRepository<ConfirmationToken, Long> {
-    Optional<ConfirmationToken> findConfirmationToken(String token);
+    Optional<ConfirmationToken> findBy(String token);
 
 }

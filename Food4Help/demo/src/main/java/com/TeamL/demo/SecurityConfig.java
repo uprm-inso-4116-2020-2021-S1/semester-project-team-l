@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
-@EnableMongoRepositories
+@EnableMongoRepositories("com.TeamL.demo")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
 
