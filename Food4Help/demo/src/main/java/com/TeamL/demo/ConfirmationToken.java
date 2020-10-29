@@ -1,12 +1,16 @@
 package com.TeamL.demo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.util.UUID;
 @Component
 public class ConfirmationToken {
+    @Transient
+    public static final String SEQUENCE_NAME = "CT_sequence";
 
+    @Id
     private Long id;
 
     private String confirmationToken;

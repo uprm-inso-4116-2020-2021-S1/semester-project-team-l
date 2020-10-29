@@ -13,13 +13,9 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepositories;
-    private final ConfirmationTokenService confirmationTokenService;
-    private final EmailService emailService;
 
-    public UserService(UserRepository userRepositories, ConfirmationTokenService confirmationTokenService, EmailService emailService) {
+    public UserService(UserRepository userRepositories) {
         this.userRepositories = userRepositories;
-        this.confirmationTokenService = confirmationTokenService;
-        this.emailService = emailService;
     }
 
     public void signUp(User user){
@@ -27,30 +23,28 @@ public class UserService implements UserDetailsService {
         final String encryptedPass = passEncoder.encode(user.getPassword());
         user.setPassword(encryptedPass);
         final User createdUser = userRepositories.save(user);
-        final ConfirmationToken confirmationToken = new ConfirmationToken(user);
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
     }
 
-    void confirmUser(ConfirmationToken confirmationToken){
-        final User user = confirmationToken.getUser();
-        user.setEnabled(true);
-        userRepositories.save(user);
-        confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
+//    void confirmUser(ConfirmationToken confirmationToken){
+//        final User user = confirmationToken.getUser();
+//        user.setEnabled(true);
+//        userRepositories.save(user);
+//        confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
+//
+//    }
 
-    }
-
-    void sendConfirmationMail(String userMail, String token) {
-
-        final SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(userMail);
-        mailMessage.setSubject("Mail Confirmation Link!");
-        mailMessage.setFrom("<MAIL>");
-        mailMessage.setText(
-                "Thank you for registering. Please click on the below link to activate your account." + "http://localhost:8080/sign-up/confirm?token="
-                        + token);
-
-        emailService.sendEmail(mailMessage);
-    }
+//    void sendConfirmationMail(String userMail, String token) {
+//
+//        final SimpleMailMessage mailMessage = new SimpleMailMessage();
+//        mailMessage.setTo(userMail);
+//        mailMessage.setSubject("Mail Confirmation Link!");
+//        mailMessage.setFrom("<MAIL>");
+//        mailMessage.setText(
+//                "Thank you for registering. Please click on the below link to activate your account." + "http://localhost:8080/sign-up/confirm?token="
+//                        + token);
+//
+//        emailService.sendEmail(mailMessage);
+//    }
 
 
     @Override

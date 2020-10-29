@@ -27,14 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
-                .authorizeRequests()
-                .antMatchers("/sign-up/**", "/sign-in/**")
-                .permitAll()
-                .anyRequest().authenticated()
+                .cors()
                 .and()
-                .formLogin()
-                .loginPage("/sign-in")
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/register/**","/sign-up/**", "/sign-in/**")
                 .permitAll();
     }
     @Autowired

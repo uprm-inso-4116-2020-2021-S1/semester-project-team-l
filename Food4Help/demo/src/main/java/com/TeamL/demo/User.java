@@ -1,7 +1,8 @@
 package com.TeamL.demo;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
+
 @Component
 @Document(collection = "users")
 public class User implements UserDetails
@@ -17,14 +19,16 @@ public class User implements UserDetails
     public static final String GENDER_MALE = "M";
     public static final String GENDER_FEMALE = "F";
 
-    private Long id;
+    @Id
+    private String id;
     private String firstName;
     private String lastName;
+    @Field("email")
     private String email;
     private String password;
     private String gender;
     private int age;
-    private UserRole userRole = UserRole.USER;
+    private Role role = Role.USER;
     private boolean locked = false;
     private boolean enabled = false;
 
@@ -48,11 +52,11 @@ public class User implements UserDetails
         this.password = password;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -96,12 +100,12 @@ public class User implements UserDetails
         this.age = age;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public Role getUserRole() {
+        return role;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setUserRole(Role role) {
+        this.role = role;
     }
 
     public boolean isLocked() {
@@ -123,7 +127,7 @@ public class User implements UserDetails
     //Implemented methods from UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.name());
+        final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(simpleGrantedAuthority);
     }
 
