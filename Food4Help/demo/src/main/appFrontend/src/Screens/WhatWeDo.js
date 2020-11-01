@@ -21,7 +21,6 @@ const sections = [
   { title: 'About Us', url: '/aboutus' },
   { title: 'Home Page', url: '/' },
   { title: 'Register Your Company', url: '/register' },
-  { title: 'Review', url: '/reviews' },
 ];
 
 export default function WhatWeDo() {

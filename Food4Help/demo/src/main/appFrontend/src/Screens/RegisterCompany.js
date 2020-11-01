@@ -108,8 +108,6 @@ export default function RegisterCompany() {
                       autoComplete="current-password"
                     />
                   </Grid>
-                </Grid>
-                <Grid container spacing={2}>
                 <Grid item xs={12}>
                    <TextField
                      variant="outlined"
@@ -119,6 +117,7 @@ export default function RegisterCompany() {
                      label="Company Name"
                      type="company name"
                      id="company name"
+                     autoComplete="cname"
                    />
                  </Grid>
                  <Grid item xs={12}>
@@ -130,7 +129,20 @@ export default function RegisterCompany() {
                     label="Phone Number"
                     type="phone number"
                     id="phone number"
+                    autoComplete="phone"
                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                     variant="outlined"
+                     required
+                     fullWidth
+                     name="category"
+                     label="Category"
+                     type="category"
+                     id="category"
+                     autoComplete="cat"
+                     />
                   </Grid>
                  </Grid>
                 <Button

@@ -49,7 +49,6 @@ const sections = [
   { title: 'Home Page', url: '/' },
   { title: 'What we do', url: '/whatwedo' },
   { title: 'Register Your Company', url: '/register' },
-  { title: 'Review', url: '/reviews' },
 ];
 export default function AboutUs() {
   const classes = useStyles();

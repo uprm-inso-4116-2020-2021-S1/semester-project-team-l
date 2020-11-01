@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   sidebarAboutBox: {
@@ -29,19 +28,6 @@ export default function Sidebar(props) {
         </Typography>
         <Typography>{description}</Typography>
       </Paper>
-      <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-        Social
-      </Typography>
-      {social.map((network) => (
-        <Link display="block" variant="body1" href="#" key={network}>
-          <Grid container direction="row" spacing={1} alignItems="center">
-            <Grid item>
-              <network.icon />
-            </Grid>
-            <Grid item>{network.name}</Grid>
-          </Grid>
-        </Link>
-      ))}
     </Grid>
   );
 }
@@ -49,6 +35,5 @@ export default function Sidebar(props) {
 Sidebar.propTypes = {
   archives: PropTypes.array,
   description: PropTypes.string,
-  social: PropTypes.array,
   title: PropTypes.string,
 };
