@@ -23,8 +23,8 @@ public class User implements UserDetails
     private String id;
     private String firstName;
     private String lastName;
-    @Field("email")
-    private String email;
+    @Field("User email")
+    private String userEmail;
     private String password;
     private String gender;
     private int age;
@@ -34,10 +34,10 @@ public class User implements UserDetails
 
     //Constructor
     @PersistenceConstructor
-    public User(String firstName, String lastName, String email, String gender, int age) {
+    public User(String firstName, String lastName, String UserEmail, String gender, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.userEmail = UserEmail;
         this.gender = gender;
         this.age = age;
     }
@@ -76,12 +76,12 @@ public class User implements UserDetails
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getGender() {
@@ -137,7 +137,7 @@ public class User implements UserDetails
 
     @Override
     public String getUsername() {
-        return email;
+        return userEmail;
     }
 
     @Override

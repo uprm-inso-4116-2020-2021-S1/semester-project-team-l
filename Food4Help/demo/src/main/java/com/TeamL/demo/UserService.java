@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService {
             return optionalUser.get();
         }
         else {
-            throw new UsernameNotFoundException(MessageFormat.format("User with email {0} cannot be found.", email));
+            throw new UsernameNotFoundException(MessageFormat.format("User with entityEmail {0} cannot be found.", email));
         }
     }
 
