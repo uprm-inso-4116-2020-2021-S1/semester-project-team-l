@@ -60,7 +60,6 @@ const sections = [
   { title: 'Home Page', url: '/' },
   { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '/whatwedo' },
-  { title: 'Register Your Company', url: '/register' },
   { title: 'Review', url: '/reviews' },
 ];
 

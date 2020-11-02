@@ -41,8 +41,6 @@ const sections = [
   { title: 'Home Page', url: '/' },
   { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '/whatwedo' },
-  { title: 'Register Your Company', url: '/register' },
-  { title: 'Review', url: '/reviews' },
 ];
 
 export default function RegisterCompany() {
@@ -150,6 +148,7 @@ export default function RegisterCompany() {
                   fullWidth
                   variant="contained"
                   color="primary"
+                  href="/company"
                   className={classes.submit}
                 >
                   Register

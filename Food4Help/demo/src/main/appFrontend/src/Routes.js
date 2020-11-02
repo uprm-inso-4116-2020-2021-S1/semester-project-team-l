@@ -11,6 +11,7 @@ import Register from './Screens/RegisterCompany';
 import Company from './Screens/Company';
 import Reviews from './Screens/Reviews';
 import Filter from './Screens/FilterPage';
+import User from './Screens/User';
 function Routes() {
     return (
         <div className="Routes">
@@ -25,6 +26,7 @@ function Routes() {
             <Route path="/company" component={Company} />
             <Route path="/reviews" component={Reviews} />
             <Route path="/filter" component={Filter} />
+            <Route path="/user" component={User} />
             <Route component={Error} />
             </Switch>
         </BrowserRouter>

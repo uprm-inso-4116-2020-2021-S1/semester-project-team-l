@@ -77,6 +77,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
+            href="/"
             className={classes.submit}
           >
             Login
