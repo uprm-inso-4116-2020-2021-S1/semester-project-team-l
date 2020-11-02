@@ -45,7 +45,7 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        <IconButton>
+        <IconButton href="/filter">
           <SearchIcon />
         </IconButton>
       </Toolbar>
