@@ -1,12 +1,16 @@
-package com.TeamL.demo.User.ConfirmationToken;
+package com.TeamL.demo;
 
-import com.TeamL.demo.User.User;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.UUID;
-
+@Component
 public class ConfirmationToken {
+    @Transient
+    public static final String SEQUENCE_NAME = "CT_sequence";
 
+    @Id
     private Long id;
 
     private String confirmationToken;
@@ -15,10 +19,14 @@ public class ConfirmationToken {
 
     private User user;
 
+
+
     public ConfirmationToken(User user) {
         this.user = user;
         this.localDate = LocalDate.now();
         this.confirmationToken = UUID.randomUUID().toString();
+    }
+    public ConfirmationToken(){
     }
 
     public Long getId() {

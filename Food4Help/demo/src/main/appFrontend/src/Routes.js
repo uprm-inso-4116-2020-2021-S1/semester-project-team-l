@@ -1,5 +1,6 @@
 import React from 'react';
 
+<<<<<<< HEAD
 import {Route, BrowserRouter, Switch} from 'react-router-dom';
 
 import Login from './Screens/Login';
@@ -12,6 +13,7 @@ import Company from './Screens/Company';
 import Reviews from './Screens/Reviews';
 import Filter from './Screens/FilterPage';
 import User from './Screens/User';
+
 function Routes() {
     return (
         <div className="Routes">

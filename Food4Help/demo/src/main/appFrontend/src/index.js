@@ -4,7 +4,6 @@ import './index.css';
 import Routes from './Routes';
 import * as serviceWorker from './serviceWorker';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <Routes />

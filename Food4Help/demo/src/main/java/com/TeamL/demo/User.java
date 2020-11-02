@@ -1,38 +1,48 @@
-package com.TeamL.demo.User;
-
-
-import com.TeamL.demo.Company.EntityInt;
-import com.TeamL.demo.Food.Food;
+package com.TeamL.demo;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class User implements UserDetails, EntityInt
+@Component
+@Document(collection = "users")
+public class User implements UserDetails
 {
+
     public static final String GENDER_MALE = "M";
     public static final String GENDER_FEMALE = "F";
 
-    private Long id;
+    @Id
+    private String id;
     private String firstName;
     private String lastName;
-    private String email;
+    @Field("User email")
+    private String userEmail;
     private String password;
     private String gender;
     private int age;
-    private UserRole userRole = UserRole.USER;
+    private Role role = Role.USER;
     private boolean locked = false;
-    private Boolean enabled = false;
+    private boolean enabled = false;
 
     //Constructor
-    public User(String firstName, String lastName, String email, String gender, int age) {
+    @PersistenceConstructor
+    public User(String firstName, String lastName, String UserEmail, String gender, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.userEmail = UserEmail;
         this.gender = gender;
         this.age = age;
+    }
+
+    public User(){
     }
 
 
@@ -42,11 +52,11 @@ public class User implements UserDetails, EntityInt
         this.password = password;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,12 +76,12 @@ public class User implements UserDetails, EntityInt
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getGender() {
@@ -90,12 +100,12 @@ public class User implements UserDetails, EntityInt
         this.age = age;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public Role getUserRole() {
+        return role;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setUserRole(Role role) {
+        this.role = role;
     }
 
     public boolean isLocked() {
@@ -117,7 +127,7 @@ public class User implements UserDetails, EntityInt
     //Implemented methods from UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.name());
+        final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(simpleGrantedAuthority);
     }
 
@@ -127,7 +137,7 @@ public class User implements UserDetails, EntityInt
 
     @Override
     public String getUsername() {
-        return email;
+        return userEmail;
     }
 
     @Override
@@ -156,19 +166,4 @@ public class User implements UserDetails, EntityInt
         return "hello";
     }
 
-    //Implemented methods from EntityInt
-    @Override
-    public void message() {
-
-    }
-
-    @Override
-    public void addFood(Food food) {
-
-    }
-
-    @Override
-    public void removeFood(Food food) {
-
-    }
 }
