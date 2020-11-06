@@ -1,10 +1,10 @@
-package com.TeamL.demo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Collection;
+
 @RestController
 public class UserController {
     @Autowired
@@ -13,6 +13,16 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> userID(@PathVariable String id){
+        return userService.getUser(id);
+    }
+
+    @GetMapping("/users")
+    public Collection<User> getUsers(){
+        return userService.findAll();
     }
 
     @RequestMapping(path= "/register")

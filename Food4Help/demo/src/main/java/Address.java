@@ -1,5 +1,3 @@
-package com.TeamL.demo;
-
 public class Address {
 
     public String streetName;

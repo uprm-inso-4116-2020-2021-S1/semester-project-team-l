@@ -1,6 +1,3 @@
-package com.TeamL.demo;
-
-
 import org.springframework.stereotype.Component;
 
 import java.util.Set;

@@ -124,11 +124,7 @@ export default function SignUp() {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
-<<<<<<< HEAD:Food4Help/demo/src/main/appFrontend/src/Screens/SignUp.js
                 Already have an account? Log in
-=======
-                Already have an account? Sign in
->>>>>>> beta:Food4Help/demo/src/main/appFrontend/src/HP/SignUp.js
               </Link>
             </Grid>
           </Grid>

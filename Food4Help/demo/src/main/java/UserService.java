@@ -1,13 +1,14 @@
-package com.TeamL.demo;
-
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
@@ -24,6 +25,19 @@ public class UserService implements UserDetailsService {
         user.setPassword(encryptedPass);
         final User createdUser = userRepositories.save(user);
     }
+
+    public ResponseEntity<?> getUser(@PathVariable String id){
+        Optional<User> user = userRepositories.findById(id);
+        return user.map(response -> ResponseEntity.ok().body(response))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    public Collection<User> findAll(){
+        return userRepositories.findAll();
+    }
+
+
+
 
 //    void confirmUser(ConfirmationToken confirmationToken){
 //        final User user = confirmationToken.getUser();

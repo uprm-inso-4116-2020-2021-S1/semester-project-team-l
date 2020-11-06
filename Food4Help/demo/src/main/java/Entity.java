@@ -1,5 +1,3 @@
-package com.TeamL.demo;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
@@ -67,12 +65,12 @@ public class Entity implements EntityInt {
     }
 
     @Override
-    public void addFood(Food food) {
+    public void removeFood(Food food) {
 
     }
 
     @Override
-    public void removeFood(Food food) {
+    public void addFood(Food food) {
 
     }
 }

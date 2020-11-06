@@ -1,6 +1,5 @@
 import React from 'react';
 
-<<<<<<< HEAD
 import {Route, BrowserRouter, Switch} from 'react-router-dom';
 
 import Login from './Screens/Login';
