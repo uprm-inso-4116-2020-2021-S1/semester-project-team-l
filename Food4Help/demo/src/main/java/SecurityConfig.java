@@ -25,13 +25,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .authorizeRequests()
+                .antMatchers("/register/**","/sign-up/**", "/sign-in/**", "/food/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+        http
                 .cors()
                 .and()
                 .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/register/**","/sign-up/**", "/sign-in/**")
-                .permitAll();
+                .disable();
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

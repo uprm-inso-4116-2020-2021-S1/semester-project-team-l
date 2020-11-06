@@ -1,7 +1,5 @@
 import React from 'react';
-
 import {Route, BrowserRouter, Switch} from 'react-router-dom';
-
 import Login from './Screens/Login';
 import SignUp from './Screens/SignUp';
 import HomeP from './App';
