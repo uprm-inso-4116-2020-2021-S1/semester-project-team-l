@@ -3,10 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
+import Company from './Screens/Company';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import FoodComponent from './FoodComponent';
+import UserComponent from './UserComponent';
 
+const store = createStore(applyMiddleware(ReduxThunk));
 
 ReactDOM.render(
-    <App />,
+    <Provider store={store}>
+       <FoodComponent />
+    </Provider>,
   document.getElementById('root')
 );
 

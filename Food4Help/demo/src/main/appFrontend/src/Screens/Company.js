@@ -1,4 +1,5 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../HP/Header';
 import Footer from '../HP/Footer';
@@ -20,6 +21,7 @@ import Paper from '@material-ui/core/Paper';
 import Sidebar from '../HP/Sidebar';
 import { stockData } from './dummy1';
 import axios from 'axios'
+import * as foodsActions from '../store/actions/foods';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,28 +81,52 @@ export default function Company(){
 
     const { cannfood, frozenfood, vegetables, fruit, drinks } = state;
 
-    const [food, setFood] = useState([]);
+//    const [isLoading, setIsLoading] = useState(false);
+//        const [isRefreshing, setIsRefreshing] = useState(false);
+//        const [error, setError] = useState();
+//
+//        const [formState, dispatchFormState]= useReducer(formReducer,{
+//            foodValues:{
+//            id: '',
+//            name: '',
+//            type: '',
+//            amount: '',
+//            SKU: ''
+//            },
+//            formIsValid: false
+//        }
+//        );
+//        const dispatch = useDispatch();
+//
+//        const loadFoods = useCallback(async () => {
+//            console.log('LOAD FOODS');
+//            setError(null);
+////            setIsRefreshing(true);
+//            try {
+//                await dispatch(foodsActions.fetchFoods());
+//            } catch(err) {
+//                setError(err.message);
+//            }
+////            setIsRefreshing(false);
+//        }, [dispatch, setError]);
 
-//     useEffect(() => {
-//        const api = "/food";
-//        fetch(api)
-//          .then((res) => res.json())
-//          .then((data) => {
-//            setFood( data );
-//          });
-//      }, [food]);
+//        useEffect(() => {
+//            const willFoucsSub = props.navigation.addListener(
+//                'willFocus',
+//                loadProducts
+//            );
+//
+//            return () => {
+//                willFoucsSub.remove();
+//            };
+//        }, [loadFoods]);
 
-useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'http://localhost:8080/food',
-      );
-
-      setFood(result.data);
-    };
-
-    fetchData();
-  }, [setFood]);
+//        useEffect(() => {
+//            setIsLoading(false);
+//            loadFoods().then(() => {
+//                setIsLoading(true);
+//            });
+//        }, [dispatch, loadFoods]);
 
     return (
       <React.Fragment>
@@ -145,15 +171,16 @@ useEffect(() => {
          </Grid>
          <Grid container spacing={2} alignItems='center' justify='center'>
           <Grid item xs={12} sm={3}>
+
           <List className={classes.root}>
-                      {food.map((item) => (
+                      {stockData.map((item) => (
                         <ListItem key={`${item._id}`}>
                           <ListItemText primary={`${item.name}`} />
                         </ListItem>
                       ))}
               </List>
               </Grid>
-           </Grid>
+          </Grid>
            <Grid container spacing={2} alignItems='center' justify='center' className={classes.mainGrid}>
              <Sidebar
                 title={sidebar.title}
@@ -173,7 +200,7 @@ useEffect(() => {
                })}
                archives={sidebar2.archives}
               />
-            </Grid>
+           </Grid>
         <Footer title="" description="Food4Help" />
       </React.Fragment>
     );
