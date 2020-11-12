@@ -1,3 +1,5 @@
+package com.demo;
+
 public class Address {
 
     public String streetName;
@@ -8,6 +10,10 @@ public class Address {
         this.streetName = streetName;
         this.city = city;
         this.zipCode = zipCode;
+    }
+
+    public Address(){
+
     }
 
     public String getStreetName() {

@@ -1,3 +1,5 @@
+package com.demo;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,10 @@ public class Entity implements EntityInt {
         this.entityRole = entityRole;
         this.entityName = entityName;
         this.address = address;
+    }
+
+    public Entity(){
+
     }
 
     public String getEntityEmail() {

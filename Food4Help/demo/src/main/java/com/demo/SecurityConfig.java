@@ -1,5 +1,9 @@
+package com.demo;
+
+import com.demo.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,10 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
-@EnableMongoRepositories("com.TeamL.demo")
+@EnableMongoRepositories("com.demo")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserService userService;
 
+    private final UserService userService;
+    @Autowired
     public SecurityConfig(UserService userService) {
         this.userService = userService;
     }
@@ -27,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/**/*.{js,html,css}").permitAll()
-                .antMatchers("/register/**","/sign-up/**", "/sign-in/**", "/api/food/**")
+                .antMatchers("/register/**","/sign-up/**", "/sign-in/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

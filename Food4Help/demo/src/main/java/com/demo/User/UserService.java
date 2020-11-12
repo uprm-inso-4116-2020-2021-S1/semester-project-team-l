@@ -1,3 +1,7 @@
+package com.demo.User;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,8 +15,9 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Optional;
 @Service
+@ComponentScan("com.demo.User.UserRepository")
 public class UserService implements UserDetailsService {
-
+    @Autowired
     private final UserRepository userRepositories;
 
     public UserService(UserRepository userRepositories) {
@@ -39,8 +44,8 @@ public class UserService implements UserDetailsService {
 
 
 
-//    void confirmUser(ConfirmationToken confirmationToken){
-//        final User user = confirmationToken.getUser();
+//    void confirmUser(demo.ConfirmationToken confirmationToken){
+//        final com.demo.User.User user = confirmationToken.getUser();
 //        user.setEnabled(true);
 //        userRepositories.save(user);
 //        confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
@@ -69,7 +74,7 @@ public class UserService implements UserDetailsService {
             return optionalUser.get();
         }
         else {
-            throw new UsernameNotFoundException(MessageFormat.format("User with entityEmail {0} cannot be found.", email));
+            throw new UsernameNotFoundException(MessageFormat.format("com.demo.User.User with entityEmail {0} cannot be found.", email));
         }
     }
 

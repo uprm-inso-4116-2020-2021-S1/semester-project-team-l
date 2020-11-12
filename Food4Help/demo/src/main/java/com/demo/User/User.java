@@ -1,3 +1,6 @@
+package com.demo.User;
+
+import com.demo.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,7 +25,7 @@ public class User implements UserDetails
     private String id;
     private String firstName;
     private String lastName;
-    @Field("User email")
+    @Field("com.demo.User.User email")
     private String userEmail;
     private String password;
     private String gender;

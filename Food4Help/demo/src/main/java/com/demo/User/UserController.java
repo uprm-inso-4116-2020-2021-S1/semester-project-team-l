@@ -1,3 +1,5 @@
+package com.demo.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,6 @@ import java.util.Collection;
 public class UserController {
     @Autowired
     private final UserService userService;
-    //private final ConfirmationTokenService confirmationTokenService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -44,14 +45,5 @@ public class UserController {
 
         return "sign-up";
     }
-//      Method to be implemented
-//    @GetMapping("/sign-up/confirm")
-//    String confirmMail(@RequestParam("token") String token) {
-//
-//        Optional<ConfirmationToken> optionalConfirmationToken = confirmationTokenService.findConfirmationToken(token);
-//
-//        optionalConfirmationToken.ifPresent(userService::confirmUser);
-//
-//        return "sign-in";
-//    }
+
 }

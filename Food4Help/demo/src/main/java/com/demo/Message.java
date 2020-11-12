@@ -1,3 +1,5 @@
+package com.demo;
+
 public class Message {
     private String from;
     private String message;
@@ -20,7 +22,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "com.demo.Message{" +
                 "from='" + from + '\'' +
                 ", message='" + message + '\'' +
                 '}';
