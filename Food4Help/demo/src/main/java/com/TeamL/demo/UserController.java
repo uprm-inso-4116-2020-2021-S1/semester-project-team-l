@@ -1,4 +1,4 @@
-package com.demo.User;
+package com.TeamL.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import java.util.Collection;
 public class UserController {
     @Autowired
     private final UserService userService;
+    //private final teaml.ConfirmationTokenService confirmationTokenService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -45,5 +46,14 @@ public class UserController {
 
         return "sign-up";
     }
-
+//      Method to be implemented
+//    @GetMapping("/sign-up/confirm")
+//    String confirmMail(@RequestParam("token") String token) {
+//
+//        Optional<teaml.ConfirmationToken> optionalConfirmationToken = confirmationTokenService.findConfirmationToken(token);
+//
+//        optionalConfirmationToken.ifPresent(userService::confirmUser);
+//
+//        return "sign-in";
+//    }
 }

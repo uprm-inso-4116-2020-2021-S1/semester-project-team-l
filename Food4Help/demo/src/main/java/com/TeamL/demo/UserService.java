@@ -1,9 +1,8 @@
-package com.demo.User;
+package com.TeamL.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,37 +14,34 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Optional;
 @Service
-@ComponentScan("com.demo.User.UserRepository")
 public class UserService implements UserDetailsService {
-    @Autowired
+
     private final UserRepository userRepositories;
 
     public UserService(UserRepository userRepositories) {
         this.userRepositories = userRepositories;
     }
 
-    public void signUp(User user){
+    public void signUp(User user) {
         BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
         final String encryptedPass = passEncoder.encode(user.getPassword());
         user.setPassword(encryptedPass);
         final User createdUser = userRepositories.save(user);
     }
 
-    public ResponseEntity<?> getUser(@PathVariable String id){
+    public ResponseEntity<?> getUser(@PathVariable String id) {
         Optional<User> user = userRepositories.findById(id);
         return user.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    public Collection<User> findAll(){
+    public Collection<User> findAll() {
         return userRepositories.findAll();
     }
 
 
-
-
-//    void confirmUser(demo.ConfirmationToken confirmationToken){
-//        final com.demo.User.User user = confirmationToken.getUser();
+//    void confirmUser(teaml.ConfirmationToken confirmationToken){
+//        final teaml.User user = confirmationToken.getUser();
 //        user.setEnabled(true);
 //        userRepositories.save(user);
 //        confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
@@ -72,11 +68,9 @@ public class UserService implements UserDetailsService {
 
         if (optionalUser.isPresent()) {
             return optionalUser.get();
-        }
-        else {
-            throw new UsernameNotFoundException(MessageFormat.format("com.demo.User.User with entityEmail {0} cannot be found.", email));
+        } else {
+            throw new UsernameNotFoundException(MessageFormat.format("teaml.User with entityEmail {0} cannot be found.", email));
         }
     }
-
 }
 

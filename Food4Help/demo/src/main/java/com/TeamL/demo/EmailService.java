@@ -1,4 +1,4 @@
-package com.demo;
+package com.TeamL.demo;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

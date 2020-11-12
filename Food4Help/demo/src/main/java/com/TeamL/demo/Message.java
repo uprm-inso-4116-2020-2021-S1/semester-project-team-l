@@ -1,4 +1,4 @@
-package com.demo;
+package com.TeamL.demo;
 
 public class Message {
     private String from;

@@ -1,6 +1,4 @@
-package com.demo.User;
-
-import com.demo.Role;
+package com.TeamL.demo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,8 +23,8 @@ public class User implements UserDetails
     private String id;
     private String firstName;
     private String lastName;
-    @Field("com.demo.User.User email")
-    private String userEmail;
+    @Field("email")
+    private String email;
     private String password;
     private String gender;
     private int age;
@@ -36,10 +34,10 @@ public class User implements UserDetails
 
     //Constructor
     @PersistenceConstructor
-    public User(String firstName, String lastName, String UserEmail, String gender, int age) {
+    public User(String firstName, String lastName, String email, String gender, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userEmail = UserEmail;
+        this.email = email;
         this.gender = gender;
         this.age = age;
     }
@@ -78,12 +76,12 @@ public class User implements UserDetails
         this.lastName = lastName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getGender() {
@@ -139,7 +137,7 @@ public class User implements UserDetails
 
     @Override
     public String getUsername() {
-        return userEmail;
+        return email;
     }
 
     @Override

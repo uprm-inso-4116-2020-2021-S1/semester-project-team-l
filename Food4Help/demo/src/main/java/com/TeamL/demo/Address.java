@@ -1,4 +1,4 @@
-package com.demo;
+package com.TeamL.demo;
 
 public class Address {
 
@@ -10,10 +10,6 @@ public class Address {
         this.streetName = streetName;
         this.city = city;
         this.zipCode = zipCode;
-    }
-
-    public Address(){
-
     }
 
     public String getStreetName() {

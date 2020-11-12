@@ -1,10 +1,7 @@
-package com.demo;
+package com.TeamL.demo;
 
-import org.springframework.stereotype.Component;
 
 import java.util.Set;
-
-@Component
 public class Food
 {
     private String name;
