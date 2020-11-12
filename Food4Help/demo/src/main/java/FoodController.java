@@ -2,23 +2,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/food")
+@RequestMapping("/api")
 public class FoodController
 {
     @Autowired
     private FoodRepository foodRepository;
 
-    @PostMapping
+    @PostMapping("/food/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Food add(@RequestBody Food food)
     {
         return foodRepository.save(food);
     }
 
-    @GetMapping
+    @GetMapping("/food")
     public List<Food> getAll() {
         return foodRepository.findAll();
     }

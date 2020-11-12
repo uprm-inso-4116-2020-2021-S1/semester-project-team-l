@@ -8,7 +8,7 @@ export const fetchFoods = (id, name, type, amount, SKU) => {
 //    const userId = getState().auth.userId;
     try {
       const response = await fetch(
-        '/food',
+        '/api/food',
         {
                 method: 'GET',
                 headers: {
