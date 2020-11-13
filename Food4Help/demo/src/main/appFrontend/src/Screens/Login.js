@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +37,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+          const fetchData = async () => {
+            const result = await axios(
+              'http://localhost:8080/users',
+            );
+
+            setUser(result.data);
+          };
+
+          fetchData();
+        }, [setUser]);
 
    return (
     <Container component="main" maxWidth="xs">

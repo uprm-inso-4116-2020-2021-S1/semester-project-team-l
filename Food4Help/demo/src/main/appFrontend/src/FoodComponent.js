@@ -25,6 +25,7 @@ class FoodComponent extends React.Component {
 //     }
      componentDidMount(){
             axios.get('http://localhost:8080/api/food').then((response) => {
+                    this.setState({ food: response.data})
                     console.log("API reached");},
                     (error) => {
                     console.log("Error");
@@ -50,7 +51,7 @@ class FoodComponent extends React.Component {
                                 {
                                     food.map(
                                         foods =>
-                                        <tr key = {foods._id}>
+                                        <tr key = {foods.id}>
                                              <td> {foods.name}</td>
                                              <td> {foods.type}</td>
                                              <td> {foods.amount}</td>
