@@ -37,19 +37,61 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
-  const [food, setFood] = useState([]);
+   const [users, setUsers] = useState({
+           firstName: '',
+           lastName: '',
+           email: '',
+           password: ''
+       });
+       const [submitted, setSubmitted] = useState(false);
+       const { firstName, lastName, email, password } = users;
 
-      useEffect(() => {
-          const fetchData = async () => {
-            const result = await axios(
-              'http://localhost:8080/sign-up',
-            );
+       // reset login status
+  //     useEffect(() => {
+  //         dispatch(userActions.logout());
+  //     }, []);
 
-            setFood(result.data);
-          };
+       function handleChange(e) {
+           const { name, value } = e.target;
+           setUsers(users => ({ ...users, [name]: value }));
+       }
+//
+//       useEffect(() => {
+//          console.log("first name: "+ firstName)
+//          console.log("last name: "+lastName)
+//          console.log("email: "+email)
+//          console.log("password: "+password)
+//       }, [setSubmitted]);
 
-          fetchData();
-        }, [setFood]);
+       useEffect(() => {
+
+                 console.log("first name: "+ firstName)
+
+       }, [setUsers]);
+
+       function handleSubmit(e) {
+           e.preventDefault();
+
+           setSubmitted(true);
+           if (users.firstName && users.lastName && users.email && users.password) {
+               // get return url from location state or default to home page
+  //             const { from } = location.state || { from: { pathname: "/" } };
+  //             dispatch(userActions.login(username, password, from));
+               axios({method: 'post',
+                             url:'http://localhost:8080/sign-up',
+                             data: {
+                                 firstName: users.firstName,
+                                            lastName: users.lastName,
+                                            email: users.email,
+                                            password: users.password}}).then((response) => {
+                                  this.setUsers(response.data)
+                                  console.log(response);},
+                                  (error) => {
+                                  console.log("Error");
+                                  });
+              console.log("Se submitio la persona")
+           }
+       }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -61,17 +103,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} action="@{/sign-up}" method="post" onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>
              <Grid item xs={12} sm={6}>
                           <TextField
                             variant="outlined"
                             required
                             fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="lname"
+                            value= {users.firstName}
+                            type='text'
+                            onChange={handleChange}
+                            id="firstName"
+                            label="First Name"
+                            name="firstName"
+                            autoComplete="fname"
                           />
                         </Grid>
             <Grid item xs={12} sm={6}>
@@ -79,6 +124,9 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value= {users.lastName}
+                type='text'
+                onChange={handleChange}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -90,6 +138,9 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value= {users.email}
+                type='text'
+                onChange={handleChange}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -101,6 +152,9 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value= {users.password}
+                type='text'
+                onChange={handleChange}
                 name="password"
                 label="Password"
                 type="password"

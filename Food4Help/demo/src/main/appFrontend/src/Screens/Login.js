@@ -38,19 +38,41 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
-  const [user, setUser] = useState([]);
+ const [inputs, setInputs] = useState({
+         email: '',
+         password: ''
+     });
+     const [submitted, setSubmitted] = useState(false);
+     const { email, password } = inputs;
 
-  useEffect(() => {
-          const fetchData = async () => {
-            const result = await axios(
-              'http://localhost:8080/users',
-            );
+     // reset login status
+//     useEffect(() => {
+//         dispatch(userActions.logout());
+//     }, []);
 
-            setUser(result.data);
-          };
+     function handleChange(e) {
+         const { name, value } = e.target;
+         setInputs(inputs => ({ ...inputs, [name]: value }));
+     }
 
-          fetchData();
-        }, [setUser]);
+     useEffect(() => {
+
+        console.log("Se submitio la persona")
+        console.log("email: "+inputs.email)
+        console.log("password: "+inputs.password)
+     }, [setSubmitted]);
+
+     function handleSubmit(e) {
+         e.preventDefault();
+
+         setSubmitted(true);
+//         if (email && password) {
+//             // get return url from location state or default to home page
+////             const { from } = location.state || { from: { pathname: "/" } };
+////             dispatch(userActions.login(username, password, from));
+//            console.log("Se submitio la persona")
+//         }
+     }
 
    return (
     <Container component="main" maxWidth="xs">
@@ -62,12 +84,15 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Log in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} action="@{/sign-in}" method="post" onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
+            value= {inputs.email}
+            type='text'
+            onChange={handleChange}
             id="email"
             label="Email Address"
             name="email"
@@ -79,11 +104,14 @@ export default function Login() {
             margin="normal"
             required
             fullWidth
+            value= {inputs.password}
+            type='text'
+            onChange={handleChange}
             name="password"
             label="Password"
-            type="password"
             id="password"
             autoComplete="current-password"
+            autoFocus
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
