@@ -1,4 +1,5 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../HP/Header';
 import Footer from '../HP/Footer';
@@ -64,7 +65,7 @@ const sections = [
   { title: 'Review', url: '/reviews' },
 ];
 
-export default function Company(){
+export default function Company() {
   const classes = useStyles();
     const [state, setState] = React.useState({
         cannfood: false,
@@ -81,26 +82,17 @@ export default function Company(){
 
     const [food, setFood] = useState([]);
 
-//     useEffect(() => {
-//        const api = "/food";
-//        fetch(api)
-//          .then((res) => res.json())
-//          .then((data) => {
-//            setFood( data );
-//          });
-//      }, [food]);
+    useEffect(() => {
+        const fetchData = async () => {
+          const result = await axios(
+            'http://localhost:8080/api/food',
+          );
 
-useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'http://localhost:8080/food',
-      );
+          setFood(result.data);
+        };
 
-      setFood(result.data);
-    };
-
-    fetchData();
-  }, [setFood]);
+        fetchData();
+      }, [setFood]);
 
     return (
       <React.Fragment>
@@ -145,15 +137,16 @@ useEffect(() => {
          </Grid>
          <Grid container spacing={2} alignItems='center' justify='center'>
           <Grid item xs={12} sm={3}>
+
           <List className={classes.root}>
                       {food.map((item) => (
-                        <ListItem key={`${item._id}`}>
+                        <ListItem key={`${item.id}`}>
                           <ListItemText primary={`${item.name}`} />
                         </ListItem>
                       ))}
               </List>
               </Grid>
-           </Grid>
+          </Grid>
            <Grid container spacing={2} alignItems='center' justify='center' className={classes.mainGrid}>
              <Sidebar
                 title={sidebar.title}
@@ -173,7 +166,7 @@ useEffect(() => {
                })}
                archives={sidebar2.archives}
               />
-            </Grid>
+           </Grid>
         <Footer title="" description="Food4Help" />
       </React.Fragment>
     );

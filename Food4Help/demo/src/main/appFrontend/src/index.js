@@ -1,13 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Routes from './MessageApp';
-import * as serviceWorker from './serviceWorker';
+import App from './App';
+import Company from './Screens/Company';
+import SignUp from './Screens/SignUp';
+import Login from './Screens/Login';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import FoodComponent from './FoodComponent';
+
+const store = createStore(applyMiddleware(ReduxThunk));
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Routes />
-  </React.StrictMode>,
+    <Provider store={store}>
+       <SignUp />
+    </Provider>,
   document.getElementById('root')
 );
 

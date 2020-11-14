@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +37,62 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+   const [users, setUsers] = useState({
+           firstName: '',
+           lastName: '',
+           email: '',
+           password: ''
+       });
+       const [submitted, setSubmitted] = useState(false);
+       const { firstName, lastName, email, password } = users;
+
+       // reset login status
+  //     useEffect(() => {
+  //         dispatch(userActions.logout());
+  //     }, []);
+
+       function handleChange(e) {
+           const { name, value } = e.target;
+           setUsers(users => ({ ...users, [name]: value }));
+       }
+//
+//       useEffect(() => {
+//          console.log("first name: "+ firstName)
+//          console.log("last name: "+lastName)
+//          console.log("email: "+email)
+//          console.log("password: "+password)
+//       }, [setSubmitted]);
+
+       useEffect(() => {
+
+                 console.log("first name: "+ firstName)
+
+       }, [setUsers]);
+
+       function handleSubmit(e) {
+           e.preventDefault();
+
+           setSubmitted(true);
+           if (users.firstName && users.lastName && users.email && users.password) {
+               // get return url from location state or default to home page
+  //             const { from } = location.state || { from: { pathname: "/" } };
+  //             dispatch(userActions.login(username, password, from));
+               axios({method: 'post',
+                             url:'http://localhost:8080/sign-up',
+                             data: {
+                                 firstName: users.firstName,
+                                            lastName: users.lastName,
+                                            email: users.email,
+                                            password: users.password}}).then((response) => {
+                                  this.setUsers(response.data)
+                                  console.log(response);},
+                                  (error) => {
+                                  console.log("Error");
+                                  });
+              console.log("Se submitio la persona")
+           }
+       }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -45,25 +103,30 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} action="@{/sign-up}" method="post" onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>
+             <Grid item xs={12} sm={6}>
+                          <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            value= {users.firstName}
+                            type='text'
+                            onChange={handleChange}
+                            id="firstName"
+                            label="First Name"
+                            name="firstName"
+                            autoComplete="fname"
+                          />
+                        </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
+                value= {users.lastName}
+                type='text'
+                onChange={handleChange}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -75,28 +138,23 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                value= {users.email}
+                type='text'
+                onChange={handleChange}
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
               />
             </Grid>
-             <Grid item xs={12}>
-                          <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="user name"
-                            label="User Name"
-                            name="user name"
-                            autoComplete="user name"
-                          />
-                        </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
+                value= {users.password}
+                type='text'
+                onChange={handleChange}
                 name="password"
                 label="Password"
                 type="password"
