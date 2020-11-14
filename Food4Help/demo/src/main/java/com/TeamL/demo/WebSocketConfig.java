@@ -2,6 +2,7 @@ package com.TeamL.demo;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -12,15 +13,18 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app").enableSimpleBroker("/topic");
-        /*config.enableSimpleBroker("/secured/user/queue/specific-user");
-        config.setApplicationDestinationPrefixes("/spring-security-mvc-socket");
-        config.setUserDestinationPrefix("/secured/user");*/
+        //registry.setApplicationDestinationPrefixes("/app");
+       // registry.enableSimpleBroker("/topic");
+       //config.setApplicationDestinationPrefixes("/app");
+        //registry.setUserDestinationPrefix("/app");
+        registry.setApplicationDestinationPrefixes("/chat");
+        registry.enableSimpleBroker("/topic");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat").setAllowedOrigins("*").withSockJS();
+
+        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
     }
 
 }

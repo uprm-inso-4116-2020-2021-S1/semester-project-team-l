@@ -1,31 +1,47 @@
 package com.TeamL.demo;
 
+import java.util.Objects;
 public class Message {
-    private String from;
-    private String message;
 
-    public String getFrom() {
-        return from;
+    private String username;
+    private String text;
+
+    public Message() {
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public Message(String username, String text) {
+        this.username = username;
+        this.text = text;
     }
 
-    public String getMessage() {
-        return message;
+    public String getUsername() {
+        return username;
     }
 
-    public void setMessage(String text) {
-        this.message = message;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
-    public String toString() {
-        return "com.demo.Message{" +
-                "from='" + from + '\'' +
-                ", message='" + message + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message that = (Message) o;
+        return Objects.equals(username, that.username) &&
+                Objects.equals(text, that.text);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, text);
     }
 }
-
