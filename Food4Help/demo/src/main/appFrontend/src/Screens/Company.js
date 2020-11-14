@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../HP/Header';
 import Footer from '../HP/Footer';
@@ -19,6 +19,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Paper from '@material-ui/core/Paper';
 import Sidebar from '../HP/Sidebar';
 import { stockData } from './dummy1';
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +64,7 @@ const sections = [
   { title: 'Review', url: '/reviews' },
 ];
 
-export default function Company() {
+export default function Company(){
   const classes = useStyles();
     const [state, setState] = React.useState({
         cannfood: false,
@@ -77,6 +78,29 @@ export default function Company() {
         };
 
     const { cannfood, frozenfood, vegetables, fruit, drinks } = state;
+
+    const [food, setFood] = useState([]);
+
+//     useEffect(() => {
+//        const api = "/food";
+//        fetch(api)
+//          .then((res) => res.json())
+//          .then((data) => {
+//            setFood( data );
+//          });
+//      }, [food]);
+
+useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'http://localhost:8080/food',
+      );
+
+      setFood(result.data);
+    };
+
+    fetchData();
+  }, [setFood]);
 
     return (
       <React.Fragment>
@@ -122,9 +146,9 @@ export default function Company() {
          <Grid container spacing={2} alignItems='center' justify='center'>
           <Grid item xs={12} sm={3}>
           <List className={classes.root}>
-                      {stockData.map((item) => (
-                        <ListItem key={`${item.companyName}`}>
-                          <ListItemText primary={`${item.companyName}`} />
+                      {food.map((item) => (
+                        <ListItem key={`${item._id}`}>
+                          <ListItemText primary={`${item.name}`} />
                         </ListItem>
                       ))}
               </List>

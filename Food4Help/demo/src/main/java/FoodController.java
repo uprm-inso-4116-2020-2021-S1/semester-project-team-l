@@ -22,4 +22,29 @@ public class FoodController
     public List<Food> getAll() {
         return foodRepository.findAll();
     }
+
+    @GetMapping(value = "/{id}")
+    public Food getOne(@PathVariable String id) {
+        return foodRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException());
+    }
+
+    @PutMapping(value = "/{id}")
+    public Food update(@PathVariable String id, @RequestBody Food updatedFood) {
+        Food food = foodRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException());
+        food.setName(updatedFood.getName());
+        food.setType(updatedFood.getType());
+        food.setAmount(updatedFood.getAmount());
+        food.setSKU(updatedFood.getSKU());
+        return foodRepository.save(food);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void delete(@PathVariable String id) {
+        Food food = foodRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException());
+        foodRepository.delete(food);
+    }
 }

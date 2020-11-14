@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect}  from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../HP/Header';
 import Footer from '../HP/Footer';
@@ -66,6 +66,19 @@ export default function FilterPage() {
 
   const { supermarket, restaurant, fastfood } = state;
 
+  const [companies, setCompanies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(async () => {
+        const response = await fetch('/api/companies');
+        const body = await response.json();
+        this.setState({ companies: body, isLoading: false });
+      },[companies, isLoading]);
+
+  if (isLoading) {
+        return <p>Loading...</p>;
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -102,9 +115,9 @@ export default function FilterPage() {
        <Grid container spacing={2} alignItems='center' justify='center'>
         <Grid item xs={12} sm={3}>
         <List className={classes.root}>
-                    {stockData.map((item) => (
-                      <ListItem key={`${item.companyName}`}>
-                        <ListItemText primary={`${item.companyName}`} />
+                    {companies.map((item) => (
+                      <ListItem key={`${item.id}`}>
+                        <ListItemText primary={`${item.name}`} />
                       </ListItem>
                     ))}
             </List>
