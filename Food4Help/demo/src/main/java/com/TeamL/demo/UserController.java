@@ -11,7 +11,6 @@ import java.util.Collection;
 public class UserController {
     @Autowired
     private final UserService userService;
-    //private final teaml.ConfirmationTokenService confirmationTokenService;
 
     public UserController(UserService userService) {
         this.userService = userService;

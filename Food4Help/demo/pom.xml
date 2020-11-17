@@ -15,7 +15,7 @@
 	<description>Demo project for INSO4116</description>
 
 	<properties>
-		<java.version>14</java.version>
+		<java.version>8</java.version>
 		<frontend-src-dir>${project.basedir}/src/main/appFrontend</frontend-src-dir>
 		<node.version>v12.18.4</node.version>
 		<yarn.version>v1.22.4</yarn.version>
