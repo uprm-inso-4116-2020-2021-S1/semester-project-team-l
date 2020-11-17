@@ -85,7 +85,7 @@ export default function Company() {
     useEffect(() => {
         const fetchData = async () => {
           const result = await axios(
-            'http://localhost:8080/api/food',
+            'http://localhost:8080/users',
           );
 
           setFood(result.data);

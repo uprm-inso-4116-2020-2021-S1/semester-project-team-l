@@ -8,8 +8,11 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class WebSocketChatController{
 
     //private final UserService userService;
@@ -18,7 +21,6 @@ public class WebSocketChatController{
     private SimpMessagingTemplate simpMessagingTemplate;
     @MessageMapping("/publish")
     @SendTo("/topic" + "/public")
-    //@CrossOrigins("http://localhost:3000/")
     public Message broadcastMessage(@Payload Message chatMessage) {
         return chatMessage;
     }

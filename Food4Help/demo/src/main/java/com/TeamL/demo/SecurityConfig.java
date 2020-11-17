@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/users","/sign-up", "/sign-in", "/", "/js/**", "/ws")
+                .antMatchers("/sign-up", "/sign-in","/api/food", "/", "/js", "/**", "/ws")
                     .permitAll()
                 .antMatchers("/**")
                     .hasAnyRole("ADMIN", "USER")
@@ -37,10 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/sign-in")
                     .defaultSuccessUrl("/")
-                    .permitAll()
-                .and()
-                    .logout()
-                    .invalidateHttpSession(true)
                     .permitAll()
                 .and()
                     .csrf()

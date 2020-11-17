@@ -15,7 +15,7 @@ const store = createStore(applyMiddleware(ReduxThunk));
 
 ReactDOM.render(
     <Provider store={store}>
-       <SignUp />
+       <App />
     </Provider>,
   document.getElementById('root')
 );

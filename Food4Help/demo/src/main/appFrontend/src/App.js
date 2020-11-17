@@ -10,6 +10,8 @@ import Company from './Screens/Company';
 import Reviews from './Screens/Reviews';
 import Filter from './Screens/FilterPage';
 import User from './Screens/User';
+import Chat from './MessageApp';
+import Food from './FoodComponent';
 
 function App() {
     return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/reviews" component={Reviews} />
             <Route path="/filter" component={Filter} />
             <Route path="/user" component={User} />
+            <Route path="/chat" component={Chat} />
+            <Route path="/food" component={Food} />
             <Route component={Error} />
             </Switch>
         </BrowserRouter>
