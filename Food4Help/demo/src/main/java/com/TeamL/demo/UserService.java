@@ -2,14 +2,12 @@ package com.TeamL.demo;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Optional;
 @Service
@@ -30,9 +28,9 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean passEncoder(String password, String encryptedPass){
-        BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-        boolean decryptedPass = passEncoder.matches(password, encryptedPass);
-        return decryptedPass;
+            BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+            boolean decryptedPass = passEncoder.matches(password, encryptedPass);
+            return decryptedPass;
     }
 
     public ResponseEntity<?> getUser(@PathVariable String id) {

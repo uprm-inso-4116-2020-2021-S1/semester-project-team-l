@@ -1,11 +1,7 @@
 package com.TeamL.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
@@ -43,8 +39,11 @@ public class UserController {
     @GetMapping("/sign-in")
     public String signIn(@RequestParam String email, @RequestParam String password){
         User user = userService.loadUserByUsername(email);
-        boolean encryptedPass = userService.passEncoder(password, user.getPassword());
-        if(user.getUsername().equals(email) && encryptedPass){
+        if (user == null)
+        {
+            return "not today hacker man";
+        }
+        else if(user.getUsername().equals(email) && userService.passEncoder(password, user.getPassword())){
             return user.getId();
         }
         else{

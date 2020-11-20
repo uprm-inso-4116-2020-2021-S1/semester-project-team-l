@@ -7,6 +7,7 @@ public class Food
     private String type;
     private int amount;
     private int SKU;
+    private String company;
 
     public Food()
     {
@@ -14,6 +15,7 @@ public class Food
         type = "";
         amount = 0;
         SKU = 0;
+        company = "";
     }
     public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU)
     {
@@ -31,6 +33,16 @@ public class Food
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public void setCompany(String Comp)
+    {
+        this.company = Comp;
+    }
+
+    public String getCompany()
+    {
+        return company;
     }
 
     public String getType()
