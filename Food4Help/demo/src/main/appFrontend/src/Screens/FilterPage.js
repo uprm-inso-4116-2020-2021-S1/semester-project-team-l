@@ -49,7 +49,7 @@ const sections = [
   { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '/whatwedo' },
   { title: 'Register Your Company', url: '/register' },
-  // { title: 'Review', url: '/reviews' },
+  { title: 'Review', url: '/reviews' },
 ];
 
 
@@ -68,16 +68,6 @@ export default function FilterPage() {
 
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(async () => {
-        const response = await fetch('/api/companies');
-        const body = await response.json();
-        this.setState({ companies: body, isLoading: false });
-      },[companies, isLoading]);
-
-  // if (isLoading) {
-  //       return <p>Loading...</p>;
-  // }
 
   return (
     <React.Fragment>
