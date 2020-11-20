@@ -84,8 +84,7 @@ export default function SignUp() {
                                             lastName: users.lastName,
                                             email: users.email,
                                             password: users.password}}).then((response) => {
-                                  this.setUsers(response.data)
-                                  console.log(response);},
+                                  console.log(response.data);},
                                   (error) => {
                                   console.log("Error");
                                   });

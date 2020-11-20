@@ -20,6 +20,8 @@ const sections = [
   { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '/whatwedo' },
   { title: 'Register Your Company', url: '/register' },
+  { title: 'Companies Page', url: '/filter' },
+  { title: 'User Profile', url: '/user' },
 ];
 
 const photo = {
