@@ -36,44 +36,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
+
   const classes = useStyles();
-  const [state, setState] = React.useState({
-      email: false,
-      password: false,
-      loginFailed: false,
-      showMessage: false,
-  });
+  const [ email, setEmail ] = useState(null);
+  const [ password, setPassword ] = useState(null);
 
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
-  this.handleChange.bind(this)
-
-     const handleChange = (event) => {
-         this.setState(
-           {
-             [event.target.name]
-              : event.target.value
-           }
-
-         )
-     }
-
+     
      useEffect(() => {
         const fetchData = async () => {
-          const result = await axios(
-            'http://localhost:8080/sign-in'
-          );
+          const result = await axios('http://localhost:8080/sign-in');
           setEmail(result.data);
           setPassword(result.data);
         }
         fetchData();
      }, [setEmail, setPassword]);
 
-     function handleSubmit(e) {
-         e.preventDefault();
-
-         setSubmitted(true);
-     }
+  
 
    return (
     <Container component="main" maxWidth="xs">
@@ -82,9 +60,7 @@ export default function Login() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Log in
-        </Typography>
+        <Typography component="h1" variant="h5">Log in</Typography>
         <form name='login' className={classes.form} action="@{/sign-in}" method="post" onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
@@ -93,7 +69,7 @@ export default function Login() {
             fullWidth
             value= {inputs.email}
             type='text'
-            onChange={handleChange}
+            onChange={(e) => setEmail(e.target.value)}
             id="email"
             label="Email Address"
             name="email"
@@ -107,7 +83,7 @@ export default function Login() {
             fullWidth
             value= {inputs.password}
             type='text'
-            onChange={handleChange}
+            onChange={(e) => setPassword(e.target.value)}
             name="password"
             label="Password"
             id="password"
