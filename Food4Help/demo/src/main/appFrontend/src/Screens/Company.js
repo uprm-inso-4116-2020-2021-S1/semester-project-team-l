@@ -19,6 +19,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Paper from '@material-ui/core/Paper';
 import Sidebar from '../HP/Sidebar';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { stockData } from './dummy1';
 import axios from 'axios'
 
@@ -27,43 +30,24 @@ const useStyles = makeStyles((theme) => ({
     mainGrid: {
       marginTop: theme.spacing(3),
     },
-      formControl: {
-        margin: theme.spacing(3),
-      },
-      root: {
-          width: '100%',
-          maxWidth: 360,
-          backgroundColor: theme.palette.background.paper,
-          position: 'relative',
-          overflow: 'auto',
-          maxHeight: 300,
-        },
-        listSection: {
-          backgroundColor: 'inherit',
-        },
-        ul: {
-          backgroundColor: 'inherit',
-          padding: 0,
-        },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
 }));
 
 const sidebar = {
-  title: 'Contact Info',
-  description:
-    'We are a group of students that have the determination to help people around the world giving organizations the accesibility to get charity and hand it to those in need.',
-
+  title: 'Contact',
 };
 const sidebar2 = {
   title: 'Meeting Info',
   description: 'Hours Available: ',
 };
 
-const sections = [
-  { title: 'Home Page', url: '/' },
-  { title: 'About Us', url: '/aboutus' },
-  { title: 'What we do', url: '/whatwedo' },
-  { title: 'Review', url: '/reviews' },
-];
+const sections = [];
 
 export default function Company() {
   const classes = useStyles();
@@ -78,7 +62,7 @@ export default function Company() {
           setState({ ...state, [event.target.name]: event.target.checked });
         };
 
-    const { cannfood, frozenfood, vegetables, fruit, drinks } = state;
+    const { canned, frozen, vegetables, fruit, drinks } = state;
 
     const [food, setFood] = useState([]);
 
@@ -96,46 +80,46 @@ export default function Company() {
       <React.Fragment>
         <CssBaseline />
         <Container maxWidth="lg">
-          <Header title="Company Page" sections={sections} />
+          <Header title="COMPANY NAME" sections={sections} />
         </Container>
-        <Grid container spacing={2} alignItems='center' justify='center' direction='row'>
+        <Grid container spacing={3} alignItems='center' justify='center' direction='row'>
+          <Grid item xs={6} sm={1} alignItems='center' justify='center'>
+            <Sidebar
+              title={sidebar.title}
+              description={stockData.map((item)=>{
+                if(item.id=="1"){
+                   return item.phone;
+                }
+              })}
+              archives={sidebar.archives}
+            />
+          </Grid>
           <Grid item xs={6} sm={3}>
-        <SearchBar
-            onChange={() => {}}
-            onRequestSearch={() =>  {}}
-          />
-           </Grid>
-           <Grid item xs={6} sm={3}>
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel component="legend">Select Category</FormLabel>
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Checkbox checked={cannfood} onChange={handleChange} name="cannfood" />}
-                          label="Canned Food"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox checked={frozenfood} onChange={handleChange} name="frozenfood" />}
-                          label="Frozen Food"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox checked={vegetables} onChange={handleChange} name="vegetables" />}
-                          label="Vegetables"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox checked={fruit} onChange={handleChange} name="fruit" />}
-                          label="Fruit"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox checked={drinks} onChange={handleChange} name="drinks" />}
-                          label="Drinks"
-                        />
-                      </FormGroup>
-                     </FormControl>
-           </Grid>
-         </Grid>
-         <Grid container spacing={2} alignItems='center' justify='center'>
+            <SearchBar
+             onChange={() => {}}
+              onRequestSearch={() =>  {}}
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">FoodType</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={state}
+              onChange={handleChange}
+            >
+            <MenuItem value={10}>Canned</MenuItem>
+            <MenuItem value={20}>Frozen</MenuItem>
+            <MenuItem value={30}>Vegetables</MenuItem>
+            <MenuItem value={40}>Fruit</MenuItem>
+            <MenuItem value={50}>Drinks</MenuItem>
+            </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} alignItems='center' justify='center'>
           <Grid item xs={12} sm={3}>
-
           <List className={classes.root}>
                       {food.map((item) => (
                         <ListItem key={`${item.id}`}>
@@ -145,27 +129,8 @@ export default function Company() {
               </List>
               </Grid>
           </Grid>
-           <Grid container spacing={2} alignItems='center' justify='center' className={classes.mainGrid}>
-             <Sidebar
-                title={sidebar.title}
-                description={stockData.map((item)=>{
-                if(item.id=="1"){
-                   return item.phone;
-                }
-                })}
-                archives={sidebar.archives}
-              />
-             <Sidebar
-               title={sidebar2.title}
-               description={sidebar2.description + stockData.map((item)=>{
-                               if(item.id=="1"){
-                                  return item.meeting;
-                               }
-               })}
-               archives={sidebar2.archives}
-              />
-           </Grid>
-        <Footer title="" description="Food4Help" />
+           
+        <Footer/>
       </React.Fragment>
     );
 }
