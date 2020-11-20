@@ -25,7 +25,14 @@ public class UserService implements UserDetailsService {
         BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
         final String encryptedPass = passEncoder.encode(user.getPassword());
         user.setPassword(encryptedPass);
+//        Optional<User> userEmail = userRepositories.findByEmail(user.getEmail());
         final User createdUser = userRepositories.save(user);
+    }
+
+    public boolean passEncoder(String password, String encryptedPass){
+        BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+        boolean decryptedPass = passEncoder.matches(password, encryptedPass);
+        return decryptedPass;
     }
 
     public ResponseEntity<?> getUser(@PathVariable String id) {
@@ -38,37 +45,13 @@ public class UserService implements UserDetailsService {
         return userRepositories.findAll();
     }
 
-
-//    void confirmUser(teaml.ConfirmationToken confirmationToken){
-//        final teaml.User user = confirmationToken.getUser();
-//        user.setEnabled(true);
-//        userRepositories.save(user);
-//        confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
-//
-//    }
-
-//    void sendConfirmationMail(String userMail, String token) {
-//
-//        final SimpleMailMessage mailMessage = new SimpleMailMessage();
-//        mailMessage.setTo(userMail);
-//        mailMessage.setSubject("Mail Confirmation Link!");
-//        mailMessage.setFrom("<MAIL>");
-//        mailMessage.setText(
-//                "Thank you for registering. Please click on the below link to activate your account." + "http://localhost:8080/sign-up/confirm?token="
-//                        + token);
-//
-//        emailService.sendEmail(mailMessage);
-//    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
         final Optional<User> optionalUser = userRepositories.findByEmail(email);
 
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
-            throw new UsernameNotFoundException(MessageFormat.format("teaml.User with entityEmail {0} cannot be found.", email));
+            return null;
         }
     }
 }

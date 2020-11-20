@@ -37,41 +37,42 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+      email: false,
+      password: false,
+      loginFailed: false,
+      showMessage: false,
+  });
 
- const [inputs, setInputs] = useState({
-         email: '',
-         password: ''
-     });
-     const [submitted, setSubmitted] = useState(false);
-     const { email, password } = inputs;
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+  this.handleChange.bind(this)
 
-     // reset login status
-//     useEffect(() => {
-//         dispatch(userActions.logout());
-//     }, []);
+     const handleChange = (event) => {
+         this.setState(
+           {
+             [event.target.name]
+              : event.target.value
+           }
 
-     function handleChange(e) {
-         const { name, value } = e.target;
-         setInputs(inputs => ({ ...inputs, [name]: value }));
+         )
      }
 
      useEffect(() => {
-
-        console.log("Se submitio la persona")
-        console.log("email: "+inputs.email)
-        console.log("password: "+inputs.password)
-     }, [setSubmitted]);
+        const fetchData = async () => {
+          const result = await axios(
+            'http://localhost:8080/sign-in'
+          );
+          setEmail(result.data);
+          setPassword(result.data);
+        }
+        fetchData();
+     }, [setEmail, setPassword]);
 
      function handleSubmit(e) {
          e.preventDefault();
 
          setSubmitted(true);
-//         if (email && password) {
-//             // get return url from location state or default to home page
-////             const { from } = location.state || { from: { pathname: "/" } };
-////             dispatch(userActions.login(username, password, from));
-//            console.log("Se submitio la persona")
-//         }
      }
 
    return (
