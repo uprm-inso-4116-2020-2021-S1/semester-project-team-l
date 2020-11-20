@@ -14,11 +14,7 @@ import java.util.Collections;
 
 @Component
 @Document(collection = "users")
-public class User implements UserDetails
-{
-
-    public static final String GENDER_MALE = "M";
-    public static final String GENDER_FEMALE = "F";
+public class User implements UserDetails {
 
     @Id
     private String id;

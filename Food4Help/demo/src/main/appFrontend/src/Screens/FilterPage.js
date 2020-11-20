@@ -69,16 +69,6 @@ export default function FilterPage() {
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(async () => {
-        const response = await fetch('/api/companies');
-        const body = await response.json();
-        this.setState({ companies: body, isLoading: false });
-      },[companies, isLoading]);
-
-  if (isLoading) {
-        return <p>Loading...</p>;
-  }
-
   return (
     <React.Fragment>
       <CssBaseline />

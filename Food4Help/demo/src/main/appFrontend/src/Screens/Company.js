@@ -87,10 +87,8 @@ export default function Company() {
           const result = await axios(
             'http://localhost:8080/api/food',
           );
-
           setFood(result.data);
         };
-
         fetchData();
       }, [setFood]);
 
