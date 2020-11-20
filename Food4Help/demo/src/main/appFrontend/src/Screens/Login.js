@@ -61,13 +61,13 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">Log in</Typography>
-        <form name='login' className={classes.form} action="@{/sign-in}" method="post" onSubmit={handleSubmit} noValidate>
+        <form name='login' className={classes.form} action="@{/sign-in}" method="post" noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            value= {inputs.email}
+            value= {email}
             type='text'
             onChange={(e) => setEmail(e.target.value)}
             id="email"
@@ -81,7 +81,7 @@ export default function Login() {
             margin="normal"
             required
             fullWidth
-            value= {inputs.password}
+            value= {password}
             type='text'
             onChange={(e) => setPassword(e.target.value)}
             name="password"
