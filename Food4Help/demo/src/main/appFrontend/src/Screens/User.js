@@ -9,7 +9,6 @@ import Photo from '../HP/Photo';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -31,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(45),
         height: theme.spacing(45),
       },
-    buttonLayout: {
-      textAlign: 'center'
-    }
 }));
 
 const photo = {
@@ -44,7 +40,7 @@ const sections = [
   { title: 'Home Page', url: '/' },
   { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '/whatwedo' },
-  { title: 'Companies Page', url: '/company' },
+  { title: 'Register Your Company', url: '/register' },
 ];
 
 export default function User() {
@@ -60,18 +56,11 @@ export default function User() {
             <Avatar alt="Cindy Baker" src="https://source.unsplash.com/random" className={classes.large}/>
             <Grid item xs={12} md={4}>
                          <Paper elevation={0} className={classes.sidebarAboutBox}>
-                           <Typography variant="h6">
-                             Name: Juan Perez Torres
+                           <Typography variant="h6" gutterBottom>
+                             "Saramambiche"
                            </Typography>
-                           <Typography>Email: juan.perez@upr.edu</Typography>
-                           <Typography>Gender: Male</Typography>
-                           <Typography>Age: 24</Typography>
+                           <Typography>"Tu no metes cabra"</Typography>
                     </Paper>
-                    <div className={classes.buttonLayout}>
-                    <Button >
-                      Edit
-                    </Button>
-                    </div>
             </Grid>
        </div>
       <Footer title="" description="Food4Help" />
