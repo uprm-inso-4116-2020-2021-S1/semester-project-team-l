@@ -89,7 +89,7 @@ export default function HomePage() {
                 <Grid item xs={12} sm={9}>
                   <List>
                     {comps.map((item) => (
-                      <ListItem key={`${item.id}`} button component="a" href={"http://localhost:3000/company?=" + `${item.name}`} >
+                      <ListItem key={`${item.id}`} button component="a" href={"/company?comp=" + `${item.name}`} >
                       <ListItemIcon>
                       <Avatar alt="CompIcon" src={`${item.picUrl}`} />
                       </ListItemIcon>

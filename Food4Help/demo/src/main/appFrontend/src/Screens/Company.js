@@ -37,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+let search = window.location.search;
+let params = new URLSearchParams(search);
+let compName = params.get('comp');
+console.log("Company name: " + compName)
+
 
 const sections = [];
 
