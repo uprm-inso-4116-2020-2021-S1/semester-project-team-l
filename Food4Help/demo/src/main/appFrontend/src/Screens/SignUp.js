@@ -1,5 +1,4 @@
-import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -43,8 +42,8 @@ export default function SignUp() {
            email: '',
            password: ''
        });
-       const [submitted, setSubmitted] = useState(false);
-       const { firstName, lastName, email, password } = users;
+       const [, setSubmitted] = useState(false);
+       const { firstName } = users;
 
        // reset login status
   //     useEffect(() => {
@@ -85,7 +84,7 @@ export default function SignUp() {
                                             email: users.email,
                                             password: users.password}}).then((response) => {
                                   console.log(response.data);},
-                                  (error) => {
+                                  () => {
                                   console.log("Error");
                                   });
               console.log("Se submitio la persona")

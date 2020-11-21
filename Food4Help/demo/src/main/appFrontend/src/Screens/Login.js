@@ -1,6 +1,4 @@
-import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import ReactDOM from 'react-dom';
+import React, {useState, useEffect, useCallback} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios'
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,7 +37,7 @@ export default function Login() {
   const classes = useStyles();
   const [ email, setEmail ] = useState(null);
   const [ password, setPassword ] = useState(null);
-  const [ ID, setID ] = useState([]);
+  const [, setID ] = useState([]);
 
   const fetchData = useCallback (() => {
     axios({
