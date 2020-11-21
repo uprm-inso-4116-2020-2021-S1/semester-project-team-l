@@ -40,16 +40,21 @@ export default function Login() {
   const classes = useStyles();
   const [ email, setEmail ] = useState(null);
   const [ password, setPassword ] = useState(null);
+  const [ ID, setID ] = useState(null);
 
      
      useEffect(() => {
         const fetchData = async () => {
-          const result = await axios('http://localhost:8080/sign-in');
-          setEmail(result.data);
-          setPassword(result.data);
+          const result = await axios.get('http://localhost:8080/sign-in',{
+          params: {
+            email: email,
+            password: password
+          } 
+        });
+          setID(result.data)
         }
         fetchData();
-     }, [setEmail, setPassword]);
+     }, [setID]);
 
   
 
@@ -99,7 +104,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
-            href="/"
+            href="#"
             className={classes.submit}
           >
             Login
