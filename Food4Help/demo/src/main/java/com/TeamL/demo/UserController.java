@@ -10,6 +10,8 @@ import java.util.Collection;
 public class UserController {
     @Autowired
     private final UserService userService;
+    private String currentUser;
+    private boolean loggedIn = false;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -36,18 +38,24 @@ public class UserController {
         }
     }
 
+    @GetMapping("/getUser")
+    public String getCurrentUser(){
+        return currentUser;
+    }
+
     @GetMapping("/sign-in")
-    public String signIn(@RequestParam String email, @RequestParam String password){
+    public boolean signIn(@RequestParam String email, @RequestParam String password){
         User user = userService.loadUserByUsername(email);
         if (user == null)
         {
-            return "not today hacker man";
+            return loggedIn;
         }
         else if(user.getUsername().equals(email) && userService.passEncoder(password, user.getPassword())){
-            return user.getId();
+            currentUser = user.getId();
+            return (loggedIn = true);
         }
         else{
-            return "User not found: " + email;
+            return loggedIn;
         }
     }
 
