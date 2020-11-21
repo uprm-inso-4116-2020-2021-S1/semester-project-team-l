@@ -1,3 +1,5 @@
+package com.TeamL.demo;
+
 import org.springframework.data.annotation.Id;
 
 public class Company

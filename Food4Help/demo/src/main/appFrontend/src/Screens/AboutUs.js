@@ -92,7 +92,7 @@ export default function AboutUs() {
       </div>
       </MuiThemeProvider>
     </Container>
-    <Footer title="" description="Food4Help" />
+    <Footer/>
     </React.Fragment>
   );
 }

@@ -157,9 +157,9 @@ export default function Company() {
                   {food.map((item) => (
                       <ListItem key={`${item.id}`}>
                         <ListItemIcon>
-                        <Avatar alt="FoodIcon" src="https://static.wikia.nocookie.net/minecraft/images/5/51/Potato_TextureUpdate.png/revision/latest?cb=20190713101555" />
+                        <Avatar alt="FoodIcon" src={`${item.picUrl}`} />
                         </ListItemIcon>
-                        <ListItemText primary={`${item.name}`} secondary="Ammount: 1  Type: Vegetable" />
+                        <ListItemText primary={`${item.name}`} secondary={"Amount: " + `${item.amount}` + " Type: " + `${item.type}`}/>
                       </ListItem>
                   ))}
               </List>

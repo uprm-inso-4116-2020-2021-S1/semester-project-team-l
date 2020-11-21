@@ -54,12 +54,6 @@ export default function SignUp() {
     { value: 'restaurant', label: 'Restaurant' },
     { value: 'fastfood', label: 'Fast-Food' }
   ]
-=======
-           password: ''
-       });
-       const [, setSubmitted] = useState(false);
-       const { firstName } = users;
->>>>>>> 176bde504d78fe22fb3cb2d565fb3aed1fc6d25d
 
        // reset login status
   //     useEffect(() => {

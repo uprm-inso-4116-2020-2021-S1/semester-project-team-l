@@ -1,3 +1,5 @@
+package com.TeamL.demo;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
