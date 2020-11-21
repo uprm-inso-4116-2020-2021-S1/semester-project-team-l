@@ -48,6 +48,9 @@ export default function Header(props) {
          <Button href="/signup" variant="outlined" size="small">
                    Sign Up
          </Button>
+         <Button href="/login" variant="outlined" size="small">
+                   Sign in
+         </Button>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (
