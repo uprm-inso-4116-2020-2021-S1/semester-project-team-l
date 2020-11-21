@@ -12,7 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import axios from 'axios'
+import axios from 'axios';
+import Select from 'react-select';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,14 +38,23 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
-   const [users, setUsers] = useState({
+  const [users, setUsers] = useState({
            firstName: '',
            lastName: '',
            email: '',
-           password: ''
-       });
-       const [submitted, setSubmitted] = useState(false);
-       const { firstName, lastName, email, password } = users;
+           password: '',
+           companyName: '',
+           phoneNumber: '',
+           category: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const { firstName, lastName, email, password, companyName, phoneNumber, category } = users;
+
+  const options = [
+    { value: 'supermarket', label: 'Supermarket' },
+    { value: 'restaurant', label: 'Restaurant' },
+    { value: 'fastfood', label: 'Fast-Food' }
+  ]
 
        // reset login status
   //     useEffect(() => {
@@ -53,8 +63,16 @@ export default function SignUp() {
 
        function handleChange(e) {
            const { name, value } = e.target;
-           setUsers(users => ({ ...users, [name]: value }));
+          setUsers(users => ({ ...users, [name]: value }));
+          // setUsers(e.target.users);
+          // e.preventDefault();
        }
+
+       function handleChangeSelect(e) {
+        //const { name, value } = e.target;
+        setUsers(e.users.category);
+        e.preventDefault();
+    }
 //
 //       useEffect(() => {
 //          console.log("first name: "+ firstName)
@@ -73,17 +91,21 @@ export default function SignUp() {
            e.preventDefault();
 
            setSubmitted(true);
-           if (users.firstName && users.lastName && users.email && users.password) {
+           if (users.firstName && users.lastName && users.email && users.password && users.companyName && users.phoneNumber && users.category) {
                // get return url from location state or default to home page
   //             const { from } = location.state || { from: { pathname: "/" } };
   //             dispatch(userActions.login(username, password, from));
                axios({method: 'post',
                              url:'http://localhost:8080/sign-up',
                              data: {
-                                 firstName: users.firstName,
-                                            lastName: users.lastName,
-                                            email: users.email,
-                                            password: users.password}}).then((response) => {
+                                firstName: users.firstName,
+                                lastName: users.lastName,
+                                email: users.email,
+                                password: users.password,
+                                companyName: users.companyName,
+                                phoneNumber: users.phoneNumber,
+                                category: users.category
+                              }}).then((response) => {
                                   console.log(response.data);},
                                   (error) => {
                                   console.log("Error");
@@ -161,6 +183,52 @@ export default function SignUp() {
                 autoComplete="current-password"
               />
             </Grid>
+            <Grid item xs={12}>
+                   <TextField
+                     variant="outlined"
+                     required
+                     fullWidth
+                     value= {users.companyName}
+                     onChange={handleChange}
+                     name="company name"
+                     label="Company Name"
+                     type="company name"
+                     id="company name"
+                     autoComplete="cname"
+                   />
+                 </Grid>
+                 <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    value= {users.phoneNumber}
+                    onChange={handleChange}
+                    name="phone number"
+                    label="Phone Number"
+                    type="phone number"
+                    id="phone number"
+                    autoComplete="phone"
+                   />
+                  </Grid>
+                  {/* <Grid item xs={12}>
+                    <TextField
+                     variant="outlined"
+                     required
+                     fullWidth
+                     name="category"
+                     label="Category"
+                     type="category"
+                     id="category"
+                     autoComplete="cat"
+                     />
+                  </Grid> */}
+                  {/* <select value={users.category} onChange={handleChange}>
+                    <option value={users.category}>Supermarket</option>
+                    <option value={users.category}>Fast-Food</option>
+                    <option value={users.category}>Restaurant</option>
+                  </select> */}
+                  <Select value={users.category} onChange={handleChangeSelect} options={options}/>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
