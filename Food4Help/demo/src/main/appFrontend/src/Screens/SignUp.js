@@ -41,7 +41,6 @@ export default function SignUp() {
            firstName: '',
            lastName: '',
            email: '',
-<<<<<<< HEAD
            password: '',
            companyName: '',
            phoneNumber: '',
