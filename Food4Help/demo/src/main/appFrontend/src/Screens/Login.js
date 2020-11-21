@@ -66,12 +66,6 @@ export default function Login() {
     });
   };
 
-  // useEffect(() => {
-  //   console.log(email)
-  //   console.log(password)
-  //   console.log(foundInDB)
-  // })
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

@@ -40,7 +40,11 @@ public class UserController {
 
     @GetMapping("/getUser")
     public String getCurrentUser(){
-        return currentUser;
+        if(loggedIn)
+            return currentUser;
+        else{
+            return "redirect:/sign-in";
+        }
     }
 
     @GetMapping("/sign-in")
