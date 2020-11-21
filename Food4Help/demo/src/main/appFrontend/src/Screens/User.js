@@ -5,7 +5,6 @@ import Footer from '../HP/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import Photo from '../HP/Photo';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -36,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const photo = {
-  image: 'https://source.unsplash.com/random',
-};
 
 const sections = [
   { title: 'Home Page', url: '/' },
@@ -49,7 +45,6 @@ const sections = [
 
 export default function User() {
   const classes = useStyles();
-
   return (
     <React.Fragment>
       <CssBaseline />

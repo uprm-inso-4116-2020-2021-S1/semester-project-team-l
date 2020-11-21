@@ -1,6 +1,4 @@
-import React, {useState, useEffect, Component, useCallback, useReducer, formReducer} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import ReactDOM from 'react-dom';
+import React, {useState, useEffect, useCallback} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios'
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,18 +37,30 @@ export default function Login() {
   const classes = useStyles();
   const [ email, setEmail ] = useState(null);
   const [ password, setPassword ] = useState(null);
+  const [, setID ] = useState([]);
+
+  const fetchData = useCallback (() => {
+    axios({
+      "method": "GET",
+      "url": "http://localhost:8080/sign-in",
+      "params": {
+        "email": email,
+        "password": password
+      }
+      })
+      .then((id) => {
+        setID(id.data)
+      })
+      
+    
+  })
 
      
      useEffect(() => {
-        const fetchData = async () => {
-          const result = await axios('http://localhost:8080/sign-in');
-          setEmail(result.data);
-          setPassword(result.data);
-        }
         fetchData();
-     }, [setEmail, setPassword]);
+     }, [fetchData]);
 
-  
+     
 
    return (
     <Container component="main" maxWidth="xs">
@@ -61,7 +70,7 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">Log in</Typography>
-        <form name='login' className={classes.form} action="@{/sign-in}" method="post" noValidate>
+        <form name='login' className={classes.form} action="@{/sign-in}" method="GET" noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -69,7 +78,7 @@ export default function Login() {
             fullWidth
             value= {email}
             type='text'
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} 
             id="email"
             label="Email Address"
             name="email"
@@ -99,11 +108,12 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
-            href="/"
+            href="#"
             className={classes.submit}
           >
             Login
           </Button>
+         
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
