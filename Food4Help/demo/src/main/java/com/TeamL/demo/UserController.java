@@ -31,7 +31,7 @@ public class UserController {
     public String signUpUser(@RequestBody User user) {
         if(userService.loadUserByUsername(user.getEmail()) == null){
             userService.signUp(user);
-            return "redirect:/sign-in";
+            return "redirect:/login";
         }
         else{
            return "User email is already in use";
@@ -43,7 +43,7 @@ public class UserController {
         if(loggedIn)
             return currentUser;
         else{
-            return "redirect:/sign-in";
+            return "redirect:/login";
         }
     }
 

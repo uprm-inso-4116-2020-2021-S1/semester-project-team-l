@@ -48,17 +48,18 @@ const sidebar = {
     "We are a group of students that have the determination to help people around the world giving organizations the accesibility to get charity and hand it to those in need.",
 };
 
-export default function HomePage() {
+export default function HomePage({navigation}) {
   const [comps, setComps] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getComps = async () => {
       const result = await axios(
         'http://localhost:8080/api/comps',
-      );
+      ); 
       setComps(result.data);
-    };
-    fetchData();
+    }
+    getComps();
+
   }, [setComps]);
 
   const classes = useStyles();

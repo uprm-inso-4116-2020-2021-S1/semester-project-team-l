@@ -43,11 +43,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Login( {navigation}) {
   const classes = useStyles();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [foundInDB, setFoundInDB] = useState(false);
+  const [ID, setID] = useState(null);
   const history = useHistory();
 
   const isUserLogged = async () => {
@@ -60,11 +61,20 @@ export default function Login() {
       },
     }).then((response) => {
       if (response.data) {
-        setFoundInDB(response.data)
+        setFoundInDB(response.data);
         history.push("/");
       }
     });
+    await axios({
+      method: "GET",
+      url: "http://localhost:8080/getUser"
+    }).then((response) => {
+      if(response.data){
+        setID(response.data);
+      }
+    })
   };
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -103,7 +113,7 @@ export default function Login() {
             required
             fullWidth
             value={password}
-            type="text"
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             label="Password"
@@ -121,7 +131,9 @@ export default function Login() {
             variant="contained"
             color="primary"
             href="#"
-            onClick={() => { isUserLogged() }}
+            onClick={() => {
+              isUserLogged();
+            }}
             className={classes.submit}
           >
             Login
