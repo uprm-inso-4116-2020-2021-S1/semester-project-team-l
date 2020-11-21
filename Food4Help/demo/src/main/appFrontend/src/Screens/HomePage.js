@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,  useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -10,21 +10,14 @@ import Footer from "../HP/Footer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import SearchBar from "material-ui-search-bar";
-import { stockData } from "./dummy1";
+import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
-  },
-  root: {
-    marginLeft: theme.spacing(10),
-    width: "100%",
-    maxWidth: 600,
-    backgroundColor: theme.palette.background.paper,
-    position: "relative",
-    overflow: "auto",
-    maxHeight: 600,
   },
   margin: {
     marginLeft: theme.spacing(10),
@@ -40,13 +33,13 @@ const sections = [
   { title: "About Us", url: "/aboutus" },
   { title: "What we do", url: "/whatwedo" },
   { title: "Register Your Company", url: "/register" },
-  { title: "Companies Page", url: "/filter" },
   { title: "User Profile", url: "/user" },
 ];
 
 const photo = {
   image: "https://source.unsplash.com/random",
 };
+
 
 
 const sidebar = {
@@ -56,6 +49,18 @@ const sidebar = {
 };
 
 export default function HomePage() {
+  const [comps, setComps] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'http://localhost:8080/api/comps',
+      );
+      setComps(result.data);
+    };
+    fetchData();
+  }, [setComps]);
+
   const classes = useStyles();
   const [] = useState([]);
   const [] = useState(true);
@@ -80,13 +85,16 @@ export default function HomePage() {
                   onRequestSearch={() => {}}
                 />
               </Grid>
-              <Grid container spacing={3} alignItems="center" justify="center">
-                <Grid item xs={12} sm={3}>
-                  <List className={classes.root}>
-                    {stockData.map((item) => (
-                      <ListItem key={`${item.id}`}>
-                        <ListItemText primary={`${item.name}`} />
-                      </ListItem>
+              <Grid item spacing={3} alignItems="center" justify="center">
+                <Grid item xs={12} sm={9}>
+                  <List>
+                    {comps.map((item) => (
+                      <ListItem key={`${item.id}`} button component="a" href={"http://localhost:3000/company?=" + `${item.name}`} >
+                      <ListItemIcon>
+                      <Avatar alt="CompIcon" src={`${item.picUrl}`} />
+                      </ListItemIcon>
+                      <ListItemText primary={`${item.name}`}/>
+                    </ListItem>
                     ))}
                   </List>
                 </Grid>
