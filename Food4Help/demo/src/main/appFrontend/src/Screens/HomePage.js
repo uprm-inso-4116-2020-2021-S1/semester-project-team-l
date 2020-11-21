@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -9,11 +9,34 @@ import Main from '../HP/Main';
 import Sidebar from '../HP/Sidebar';
 import Footer from '../HP/Footer';
 import post1 from '../HP/post1.md'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import SearchBar from "material-ui-search-bar";
+import { stockData } from './dummy1';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
   },
+  root: {
+          marginLeft: theme.spacing(10),
+          width: '100%',
+          maxWidth: 600,
+          backgroundColor: theme.palette.background.paper,
+          position: 'relative',
+          overflow: 'auto',
+          maxHeight: 600,
+        },
+   margin: {
+   marginLeft: theme.spacing(10),
+   width: '100%',
+             maxWidth: 600,
+             backgroundColor: theme.palette.background.paper,
+             position: 'relative',
+             overflow: 'auto',
+             maxHeight: 600,
+   },
 }));
 
 const sections = [
@@ -39,6 +62,8 @@ const sidebar = {
 
 export default function HomePage() {
   const classes = useStyles();
+     const [companies, setCompanies] = useState([]);
+      const [isLoading, setIsLoading] = useState(true);
 
   return (
     <React.Fragment>
@@ -53,7 +78,25 @@ export default function HomePage() {
               description={sidebar.description}
               archives={sidebar.archives}
             />
-            <Main title="Posts from companies" posts={posts} />
+
+            <Grid item xs={12} sm={3}>
+            <SearchBar
+                                    className={classes.margin}
+                                  onChange={() => {}}
+                                  onRequestSearch={() =>  {}}
+                                />
+             </Grid>
+           <Grid container spacing={2} alignItems='center' justify='center'>
+                   <Grid item xs={12} sm={3}>
+                   <List className={classes.root}>
+                               {stockData.map((item) => (
+                                 <ListItem key={`${item.id}`}>
+                                   <ListItemText primary={`${item.name}`} />
+                                 </ListItem>
+                               ))}
+                       </List>
+                       </Grid>
+                       </Grid>
           </Grid>
         </main>
       </Container>
