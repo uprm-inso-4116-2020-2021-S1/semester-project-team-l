@@ -51,7 +51,7 @@ export default function WhatWeDo() {
                 </Typography>
         </div>
       </Container>
-      <Footer title="" description="Food4Help" />
+      <Footer/>
     </React.Fragment>
   );
 }
