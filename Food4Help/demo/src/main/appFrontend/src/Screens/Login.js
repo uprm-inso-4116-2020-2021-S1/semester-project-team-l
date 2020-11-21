@@ -40,23 +40,30 @@ export default function Login() {
   const classes = useStyles();
   const [ email, setEmail ] = useState(null);
   const [ password, setPassword ] = useState(null);
-  const [ ID, setID ] = useState(null);
+  const [ ID, setID ] = useState([]);
+
+  const fetchData = useCallback (() => {
+    axios({
+      "method": "GET",
+      "url": "http://localhost:8080/sign-in",
+      "params": {
+        "email": email,
+        "password": password
+      }
+      })
+      .then((id) => {
+        setID(id.data)
+      })
+      
+    
+  })
 
      
      useEffect(() => {
-        const fetchData = async () => {
-          const result = await axios.get('http://localhost:8080/sign-in',{
-          params: {
-            email: email,
-            password: password
-          } 
-        });
-          setID(result.data)
-        }
         fetchData();
-     }, [setID]);
+     }, [fetchData]);
 
-  
+     
 
    return (
     <Container component="main" maxWidth="xs">
@@ -66,7 +73,7 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">Log in</Typography>
-        <form name='login' className={classes.form} action="@{/sign-in}" method="post" noValidate>
+        <form name='login' className={classes.form} action="@{/sign-in}" method="GET" noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -74,7 +81,7 @@ export default function Login() {
             fullWidth
             value= {email}
             type='text'
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)} 
             id="email"
             label="Email Address"
             name="email"
@@ -109,6 +116,7 @@ export default function Login() {
           >
             Login
           </Button>
+         
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
