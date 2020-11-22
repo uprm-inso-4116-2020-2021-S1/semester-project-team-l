@@ -8,7 +8,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.websocket.server.ServerEndpoint;
+
 @Controller
+@ServerEndpoint("/ws")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class WebSocketChatController{
 
@@ -16,26 +19,27 @@ public class WebSocketChatController{
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
-    @MessageMapping("/publish")
-    @SendTo("/topic" + "/public")
+   /* @MessageMapping("/publish")
+    @SendTo("/topic/public")
     public Message broadcastMessage(@Payload Message chatMessage) {
         return chatMessage;
     }
-
+*/
     //handle incoming message and send them to the users
     //@MessageMapping("/chat/{to}") //maps the url from whcih u receive incoming message
-    //@MessageMapping("/chat.sendMessage")
-    //@SendTo("/topic/public")
-   /* public Message sendMessage(@Payload Message message){
+    @MessageMapping("/chat")
+    @SendTo("/queue/")
+    public Message sendMessage(@Payload Message message){
         //send message from one user to another
 
         System.out.println("handling send message " + message );
         //check is user exists in the user storage ~min 17:00
-            //simpMessagingTemplate.convertAndSendToUser(
-                   // message.getReceiver().trim(), "/reply", message);
+           // simpMessagingTemplate.convertAndSendToUser(
+                   // message.getUsername().trim(), "/reply", message);
         return message;
 
     }
+    /*
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
