@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  select: {
+    width: "97%",
+    marginLeft: theme.spacing(1),
+    zIndex: 9999
+  },
 }));
 
 export default function SignUp() {
@@ -44,8 +49,19 @@ export default function SignUp() {
   const [password, setPassword] = useState(null);
   const [companyName, setCompanyName] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
+  const [entity, setEntity] = useState(null);
   const [category, setCategory] = useState(null);
   const history = useHistory();
+  const companyOptions = [
+    { value: "supermarket", label: "Supermarket" },
+    { value: "restaurant", label: "Restaurant" },
+    { value: "fastfood", label: "Fast-Food" },
+  ];
+  const entityOptions = [
+    { value: "company", label: "Company" },
+    { value: "organization", label: "Organization" },
+  ];
+
 
   const register = async () => {
     await axios({
@@ -143,6 +159,11 @@ export default function SignUp() {
                 autoComplete="current-password"
               />
             </Grid>
+            <Select
+              onChange={(e) => setEntity(e.value)}
+              className={classes.select}
+              options={entityOptions}
+            />
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -185,12 +206,11 @@ export default function SignUp() {
                      autoComplete="cat"
                      />
                   </Grid> */}
-            {/* <select value={users.category} onChange={handleChange}>
-                    <option value={users.category}>Supermarket</option>
-                    <option value={users.category}>Fast-Food</option>
-                    <option value={users.category}>Restaurant</option>
-                  </select> */}
-            {/* <Select value={category} onChange={handleChangeSelect} options={options}/> */}
+            <Select
+              onChange={(e) => setCategory(e.value)}
+              className={classes.select}
+              options={companyOptions}
+            />
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -206,11 +226,6 @@ export default function SignUp() {
             href="#"
             onClick={() => {
               register();
-              console.log(firstName);
-              console.log(lastName);
-              console.log(email);
-              console.log(password);
-              console.log(companyName);
             }}
             className={classes.submit}
           >
