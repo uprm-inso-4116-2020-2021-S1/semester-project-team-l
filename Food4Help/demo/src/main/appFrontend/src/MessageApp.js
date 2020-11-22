@@ -1,6 +1,6 @@
 import React from "react";
 import SockJS from "sockjs-client";
-import StompJS from "stompjs";
+import Stomp from "stompjs";
 
 import ChatInputForm from "./Components/ChatInputForm";
 import ChatMessageList from "./Components/ChatMessageList";
@@ -8,10 +8,10 @@ import ChatMessageList from "./Components/ChatMessageList";
 const WEBSOCKET_URL = "http://localhost:8080/ws";
 // const RECONNECT_DELAY = 3 * 1000;
 
-const PUBLIC_TOPIC = "/topic/public";
-const PUBLISH_ENDPOINT = "/chat/publish";
+const PUBLIC_TOPIC = "/queue/";
+const PUBLISH_ENDPOINT = "/app/chat";
 
-export default class App extends React.Component {
+export default class MessageApp extends React.Component {
   state = {
     connected: false,
     messages: []
@@ -36,11 +36,11 @@ export default class App extends React.Component {
     // };
 
     // Make sure previous connection is closed
-    this.closeConnection();
+    //this.closeConnection();
 
     // Create new StompJS client
     var sock = new SockJS(WEBSOCKET_URL);
-    this.client = StompJS.over(sock);
+    this.client = Stomp.over(sock);
     //this.client.connect({}, connectCallback, errorCallback);
     sock.onopen = function(){
     console.log('open')};
