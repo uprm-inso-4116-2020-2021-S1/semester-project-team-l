@@ -31,7 +31,7 @@ public class UserController {
     public String signUpUser(@RequestBody User user) {
         if(userService.loadUserByUsername(user.getEmail()) == null){
             userService.signUp(user);
-            return "redirect:/login";
+            return "User registered";
         }
         else{
            return "User email is already in use";
@@ -43,8 +43,17 @@ public class UserController {
         if(loggedIn)
             return currentUser;
         else{
-            return "redirect:/login";
+            return "Logged off";
         }
+    }
+    @GetMapping("/getStatus")
+    public boolean getStatus(){
+        return loggedIn;
+    }
+
+    @PutMapping("/updateStatus")
+    public boolean updateStatus(@RequestParam boolean status){
+        return loggedIn = status;
     }
 
     @GetMapping("/sign-in")
@@ -62,6 +71,7 @@ public class UserController {
             return loggedIn;
         }
     }
+
 
     @GetMapping("/sign-up")
     public String signUpUser() {
