@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -31,6 +32,7 @@ export default function Header(props) {
   const [currentUser, setCurrentUser] = useState(null);
   const { sections, title } = props;
   const [tick, setTick] = useState(false);
+  const history = useHistory();
 
   const fetchData = async () => {
     let id = null;
@@ -81,6 +83,9 @@ export default function Header(props) {
   const forceUpdate = () =>{
     setTick(!tick)
   }
+  const signOut = () =>{
+    history.push("/login")
+  }
 
   return (
     <React.Fragment>
@@ -118,7 +123,8 @@ export default function Header(props) {
             <Button href="/signup" variant="outlined" size="small">
               Sign Up
             </Button>
-            <Button href="/login" variant="outlined" size="small">
+            <Button onClick={() => {signOut()}}
+             variant="outlined" size="small">
               Sign In
             </Button>
           </div>
