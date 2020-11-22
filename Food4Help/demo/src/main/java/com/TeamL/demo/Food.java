@@ -6,7 +6,7 @@ public class Food
     private String type;
     private int amount;
     private int SKU;
-    private Company company;
+    private String company;
     private String picUrl;
 
 
@@ -17,10 +17,10 @@ public class Food
         type = "";
         amount = 0;
         SKU = 0;
-        company =  new Company();
+        company = "";
         picUrl = "";
     }
-    public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU , Company comp, String pic)
+    public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU , String comp, String pic)
     {
         this.name = FoodName;
         this.type = FoodType;
@@ -44,12 +44,12 @@ public class Food
         this.name = name;
     }
 
-    public void setCompany(Company Comp)
+    public void setCompany(String Comp)
     {
         this.company = Comp;
     }
 
-    public Company getCompany()
+    public String getCompany()
     {
         return company;
     }

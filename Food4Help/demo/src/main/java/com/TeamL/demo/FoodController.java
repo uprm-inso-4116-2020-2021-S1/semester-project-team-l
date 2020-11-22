@@ -50,4 +50,10 @@ public class FoodController
                 .orElseThrow(() -> new ResourceNotFoundException());
         foodRepository.delete(food);
     }
+
+    @GetMapping("/food/searchByComp")
+    public List<Food> searchByComp(@RequestParam(name = "comp") String comp) {
+        return foodRepository.findByComp(comp);
+
+    }
 }
