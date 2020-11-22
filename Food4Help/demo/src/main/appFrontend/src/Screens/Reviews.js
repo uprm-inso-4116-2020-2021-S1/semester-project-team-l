@@ -177,7 +177,7 @@ export default function Review() {
            </Paper>
            
          </div>
-      <Footer title="" description="Food4Help" />
+      <Footer/>
     </React.Fragment>
   );
 }

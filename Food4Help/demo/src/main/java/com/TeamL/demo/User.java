@@ -23,20 +23,16 @@ public class User implements UserDetails {
     @Field("email")
     private String email;
     private String password;
-    private String gender;
-    private int age;
     private Role role = Role.USER;
     private boolean locked = false;
     private boolean enabled = false;
 
     //Constructor
     @PersistenceConstructor
-    public User(String firstName, String lastName, String email, String gender, int age) {
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.gender = gender;
-        this.age = age;
     }
 
     public User(){
@@ -79,22 +75,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public Role getUserRole() {

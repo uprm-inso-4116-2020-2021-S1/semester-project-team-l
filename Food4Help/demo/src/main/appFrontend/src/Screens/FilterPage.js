@@ -1,4 +1,4 @@
-import React, {useState, useEffect}  from 'react';
+import React, {useState}  from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../HP/Header';
 import Footer from '../HP/Footer';
@@ -10,14 +10,10 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Paper from '@material-ui/core/Paper';
-import { stockData } from './dummy1';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,8 +62,8 @@ export default function FilterPage() {
 
   const { supermarket, restaurant, fastfood } = state;
 
-  const [companies, setCompanies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [companies] = useState([]);
+  const [] = useState(true);
 
   return (
     <React.Fragment>

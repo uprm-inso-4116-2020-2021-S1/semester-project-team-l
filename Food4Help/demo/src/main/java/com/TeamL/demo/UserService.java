@@ -14,6 +14,7 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepositories;
+    private String currentUser;
 
     public UserService(UserRepository userRepositories) {
         this.userRepositories = userRepositories;

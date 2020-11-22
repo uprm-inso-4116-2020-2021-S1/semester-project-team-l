@@ -1,6 +1,5 @@
 package com.TeamL.demo;
 
-import java.util.Set;
 public class Food
 {
     private String name;
@@ -8,6 +7,9 @@ public class Food
     private int amount;
     private int SKU;
     private Company company;
+    private String picUrl;
+
+
 
     public Food()
     {
@@ -16,15 +18,21 @@ public class Food
         amount = 0;
         SKU = 0;
         company =  new Company();
+        picUrl = "";
     }
-    public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU , Company comp)
+    public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU , Company comp, String pic)
     {
         this.name = FoodName;
         this.type = FoodType;
         this.amount = FoodAmount;
         this.SKU = FoodSKU;
         this.company = comp;
+        this.picUrl = pic;
     }
+
+    public String getPicUrl() { return picUrl; }
+
+    public void setPicUrl(String picUrl) { this.picUrl = picUrl; }
 
     public String getName()
     {

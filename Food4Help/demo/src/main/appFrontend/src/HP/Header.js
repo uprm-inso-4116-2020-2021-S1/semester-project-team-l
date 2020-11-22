@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   toolbarSecondary: {
-    justifyContent: 'space-between',
-    overflowX: 'auto',
+    justifyContent: "space-between",
+    overflowX: "auto",
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -27,14 +27,72 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [ID, setID] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const { sections, title } = props;
+  const [tick, setTick] = useState(false);
+  const history = useHistory();
+
+  const fetchData = async () => {
+    let id = null;
+    await axios({
+      method: "GET",
+      url: "http://localhost:8080/getStatus",
+    }).then((response) => {
+      if (response.data) {
+        setLoggedIn(response.data);
+      }
+    });
+    await axios({
+      method: "GET",
+      url: "http://localhost:8080/getUser",
+    }).then((response) => {
+      if (response.data) {
+        setID(response.data);
+        id = response.data
+        console.log(id)
+      }
+    });
+    await axios({
+      method: "GET",
+      url: "http://localhost:8080/user/"+ id
+    }).then((response) => {
+      if (response.data) {
+        setCurrentUser(response.data);
+        console.log(response.data)
+      }
+    });
+    await axios({
+      method: "PUT",
+      url: "http://localhost:8080/updateStatus",
+      params: {
+        status: loggedIn,
+      }
+    }).then((response) => {
+      if (response.data) {
+        setLoggedIn(response.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+  },[tick])
+
+  const forceUpdate = () =>{
+    setTick(!tick)
+  }
+  const signOut = () =>{
+    history.push("/login")
+  }
 
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-         <Button href="/" variant="outlined" size="small">
-                   Home
-         </Button>
+        <Button href="/" variant="outlined" size="small">
+          Home
+        </Button>
         <Typography
           component="h2"
           variant="h5"
@@ -45,14 +103,38 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-         <Button href="/signup" variant="outlined" size="small">
-                   Sign Up
-         </Button>
-         <Button href="/login" variant="outlined" size="small">
-                   Sign in
-         </Button>
+        {loggedIn ? (
+          <div>
+            <Typography>{ID}</Typography>
+            <Button
+              href="/"
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                forceUpdate();
+                setLoggedIn(false);
+              }}
+            >
+              Log out
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Button href="/signup" variant="outlined" size="small">
+              Sign Up
+            </Button>
+            <Button onClick={() => {signOut()}}
+             variant="outlined" size="small">
+              Sign In
+            </Button>
+          </div>
+        )}
       </Toolbar>
-      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+      <Toolbar
+        component="nav"
+        variant="dense"
+        className={classes.toolbarSecondary}
+      >
         {sections.map((section) => (
           <Link
             color="inherit"

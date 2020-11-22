@@ -20,10 +20,11 @@ public class Company
         address = new Address();
     }
 
-    public Company(String id, String name, Address address){
+    public Company(String id, String name, Address address, String pic){
         this.id = id;
         this.name = name;
         this.address = address;
+        this.picUrl = pic;
     }
 
     public String getId() {

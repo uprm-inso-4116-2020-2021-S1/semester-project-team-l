@@ -6,7 +6,7 @@ import ChatInputForm from "./Components/ChatInputForm";
 import ChatMessageList from "./Components/ChatMessageList";
 
 const WEBSOCKET_URL = "http://localhost:8080/ws";
-const RECONNECT_DELAY = 3 * 1000;
+// const RECONNECT_DELAY = 3 * 1000;
 
 const PUBLIC_TOPIC = "/queue/";
 const PUBLISH_ENDPOINT = "/app/chat";
@@ -31,9 +31,9 @@ export default class MessageApp extends React.Component {
       });
     };
 
-    let errorCallback = () => {
-      window.setTimeout(() => this.createConnection(), RECONNECT_DELAY);
-    };
+    // let errorCallback = () => {
+    //   window.setTimeout(() => this.createConnection(), RECONNECT_DELAY);
+    // };
 
     // Make sure previous connection is closed
     //this.closeConnection();
