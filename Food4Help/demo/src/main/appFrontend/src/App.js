@@ -6,7 +6,6 @@ import SignUp from "./Screens/SignUp";
 import HomeP from "./Screens/HomePage";
 import About from "./Screens/AboutUs";
 import WWD from "./Screens/WhatWeDo";
-import Register from "./Screens/RegisterCompany";
 import Company from "./Screens/Company";
 import Reviews from "./Screens/Reviews";
 import User from "./Screens/User";
@@ -49,10 +48,9 @@ function App() {
                   <Route path="/signup" component={SignUp} />
                   <Route path="/login" component={Login}/>
                   <Route path="/loginFailed" component={LoginFailed}/>
-                  <Route path="/signupButton" component={SignUpButton}/>
+                  <Route path="/redirect" component={SignUpButton}/>
                   <Route path="/aboutus" component={About} />
                   <Route path="/whatwedo" component={WWD} />
-                  <Route path="/register" component={Register} />
                   <Route path="/reviews" component={Reviews} />
                   <Route path="/chat" component={Chat} />
                 </div>
