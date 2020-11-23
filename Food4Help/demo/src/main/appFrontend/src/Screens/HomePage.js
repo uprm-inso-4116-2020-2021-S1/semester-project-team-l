@@ -14,6 +14,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import SearchBar from "material-ui-search-bar";
 import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -29,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const activeSections = [
+  { title: "About Us", url: "/aboutus" },
+  { title: "What we do", url: "/whatwedo" },
+  { title: "User Profile", url: "/user" },
+];
 const sections = [
   { title: "About Us", url: "/aboutus" },
   { title: "What we do", url: "/whatwedo" },
-  { title: "Register Your Company", url: "/register" },
-  { title: "User Profile", url: "/user" },
 ];
 
 const photo = {
@@ -46,16 +50,24 @@ const sidebar = {
     "We are a group of students that have the determination to help people around the world giving organizations the accesibility to get charity and hand it to those in need.",
 };
 
-export default function HomePage({ navigation }) {
+export default function HomePage(props) {
   const [comps, setComps] = useState([]);
+  const [active, setActive] = useState(false);
   const getComps = async () => {
     const result = await axios("http://localhost:8080/api/comps");
     setComps(result.data);
   };
+  const checkActive = () => {
+    if (Cookies.get("LoggedIn") === "true") {
+      setActive(true);
+    }
+  };
 
   useEffect(() => {
     getComps();
-  }, []);
+    checkActive();
+  }, [active]);
+  
 
   const classes = useStyles();
   const [] = useState([]);
@@ -65,7 +77,7 @@ export default function HomePage({ navigation }) {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Food4Help" sections={sections} />
+        <Header title="Food4Help" sections={active ?activeSections:sections} />
         <Photo post={photo} />
         <Grid container spacing={5} className={classes.mainGrid}>
           <Sidebar

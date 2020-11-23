@@ -61,14 +61,14 @@ public class UserController {
         User user = userService.loadUserByUsername(email);
         if (user == null)
         {
-            return loggedIn;
+            return (loggedIn = false);
         }
         else if(user.getUsername().equals(email) && userService.passEncoder(password, user.getPassword())){
             currentUser = user.getId();
             return (loggedIn = true);
         }
         else{
-            return loggedIn;
+            return (loggedIn = false);
         }
     }
 

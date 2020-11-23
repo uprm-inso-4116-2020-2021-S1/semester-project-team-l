@@ -1,13 +1,6 @@
 import React, {
-  useState,
-  useEffect,
-  Component,
-  useCallback,
-  useReducer,
-  formReducer,
+  useState 
 } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import ReactDOM from "react-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -22,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,13 +37,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login( {navigation}) {
+export default function Login(props) {
   const classes = useStyles();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [foundInDB, setFoundInDB] = useState(false);
   const [ID, setID] = useState(null);
   const history = useHistory();
+  console.log(props)
+
+
 
   const isUserLogged = async () => {
     await axios({
@@ -61,7 +58,7 @@ export default function Login( {navigation}) {
       },
     }).then((response) => {
       if (response.data) {
-        setFoundInDB(response.data);
+        Cookies.set("LoggedIn", "true");
         history.push("/");
       }
     });

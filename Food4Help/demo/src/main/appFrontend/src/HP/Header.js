@@ -6,7 +6,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import axios from "axios";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -27,65 +28,82 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = useState(false);
   const [ID, setID] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-  const { sections, title } = props;
+  const { title } = props;
+  const [sections, setSections] = useState([]);
   const [tick, setTick] = useState(false);
   const history = useHistory();
+  const [active, setActive ] = useState(false);
 
-  const fetchData = async () => {
-    let id = null;
-    await axios({
-      method: "GET",
-      url: "http://localhost:8080/getStatus",
-    }).then((response) => {
-      if (response.data) {
-        setLoggedIn(response.data);
-      }
-    });
-    await axios({
-      method: "GET",
-      url: "http://localhost:8080/getUser",
-    }).then((response) => {
-      if (response.data) {
-        setID(response.data);
-        id = response.data
-        console.log(id)
-      }
-    });
-    await axios({
-      method: "GET",
-      url: "http://localhost:8080/user/"+ id
-    }).then((response) => {
-      if (response.data) {
-        setCurrentUser(response.data);
-        console.log(response.data)
-      }
-    });
-    await axios({
-      method: "PUT",
-      url: "http://localhost:8080/updateStatus",
-      params: {
-        status: loggedIn,
-      }
-    }).then((response) => {
-      if (response.data) {
-        setLoggedIn(response.data);
-      }
-    });
-  };
+  // const fetchData = async () => {
+  //   let id = null;
+  //   await axios({
+  //     method: "GET",
+  //     url: "http://localhost:8080/getStatus",
+  //   }).then((response) => {
+  //     if (response.data) {
+  //       setLoggedIn(response.data);
+  //     }
+  //   });
+  // await axios({
+  //   method: "GET",
+  //   url: "http://localhost:8080/getUser",
+  // }).then((response) => {
+  //   if (response.data) {
+  //     setID(response.data);
+  //     id = response.data
+  //     console.log(id)
+  //   }
+  // });
+  // await axios({
+  //   method: "GET",
+  //   url: "http://localhost:8080/user/"+ id
+  // }).then((response) => {
+  //   if (response.data) {
+  //     setCurrentUser(response.data);
+  //     console.log(response.data)
+  //   }
+  // });
+  // await axios({
+  //   method: "PUT",
+  //   url: "http://localhost:8080/updateStatus",
+  //   params: {
+  //     status: loggedIn,
+  //   }
+  // }).then((response) => {
+  //   if (response.data) {
+  //     setLoggedIn(response.data);
+  //   }
+  // });
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // },[tick])
+
+  // const forceUpdate = () =>{
+  //   setTick(!tick)
+  // }
+
+  const checkActive = () => {
+    if(Cookies.get("LoggedIn") === "true"){
+      setActive(true);
+    }
+  }
+  const loadSections = () => {
+    setSections(props.sections);
+  }
 
   useEffect(() => {
-    fetchData();
-  },[tick])
+    checkActive();
+    loadSections();
+  }, [active])
 
-  const forceUpdate = () =>{
-    setTick(!tick)
-  }
-  const signOut = () =>{
-    history.push("/login")
-  }
+  const signIn = () => {
+    history.push("/login");
+  };
+
 
   return (
     <React.Fragment>
@@ -103,16 +121,16 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        {loggedIn ? (
+        {active ? (
           <div>
             <Typography>{ID}</Typography>
             <Button
-              href="/"
               variant="outlined"
               size="small"
               onClick={() => {
-                forceUpdate();
-                setLoggedIn(false);
+                Cookies.set("LoggedIn", "false");
+                setActive(false);
+
               }}
             >
               Log out
@@ -123,8 +141,13 @@ export default function Header(props) {
             <Button href="/signup" variant="outlined" size="small">
               Sign Up
             </Button>
-            <Button onClick={() => {signOut()}}
-             variant="outlined" size="small">
+            <Button
+              onClick={() => {
+                signIn();
+              }}
+              variant="outlined"
+              size="small"
+            >
               Sign In
             </Button>
           </div>
@@ -155,4 +178,5 @@ export default function Header(props) {
 Header.propTypes = {
   sections: PropTypes.array,
   title: PropTypes.string,
+  auth: PropTypes.bool,
 };
