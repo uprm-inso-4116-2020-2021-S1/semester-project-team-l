@@ -6,9 +6,9 @@ export default class ChatMessageList extends React.Component {
     messages: PropTypes.arrayOf(
       PropTypes.shape({
         username: PropTypes.string,
-        text: PropTypes.string
+        text: PropTypes.string,
       })
-    )
+    ),
   };
 
   render() {

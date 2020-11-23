@@ -69,7 +69,6 @@ export default function HomePage(props) {
     getComps();
     checkActive();
   }, [active]);
-  
 
   const classes = useStyles();
   const [] = useState([]);
@@ -79,7 +78,10 @@ export default function HomePage(props) {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Food4Help" sections={active ?activeSections:sections} />
+        <Header
+          title="Food4Help"
+          sections={active ? activeSections : sections}
+        />
         <Photo post={photo} />
         <Grid container spacing={5} className={classes.mainGrid}>
           <Sidebar
@@ -103,12 +105,11 @@ export default function HomePage(props) {
                       key={`${item.id}`}
                       button
                       component="a"
-                      onClick={()=>{
-                        if(Cookies.get("LoggedIn") === "true"){
-                          history.push("/company?comp=" + `${item.name}`)
-                        }
-                        else{
-                          history.push("/signupButton")
+                      onClick={() => {
+                        if (Cookies.get("LoggedIn") === "true") {
+                          history.push("/company?comp=" + `${item.name}`);
+                        } else {
+                          history.push("/signupButton");
                         }
                       }}
                     >
