@@ -1,6 +1,7 @@
 package com.TeamL.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,13 @@ public class CompanyController
     @GetMapping("/comps")
     public List<Company> getAll() {
         return companyRepository.findAll();
+    }
+
+    @PostMapping("/comps/add")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Company add(@RequestBody Company comp)
+    {
+        return companyRepository.save(comp);
     }
 
     @GetMapping("/comps/searchByName")
