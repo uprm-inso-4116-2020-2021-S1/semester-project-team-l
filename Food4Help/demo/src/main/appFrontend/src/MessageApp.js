@@ -73,9 +73,9 @@ export default class MessageApp extends React.Component {
     }
   };
 
-  componentWillUnmount() {
+ /* componentWillUnmount() {
     this.closeConnection();
-  }
+  }*/
 
   render() {
     return (
