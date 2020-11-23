@@ -11,7 +11,7 @@ import Reviews from "./Screens/Reviews";
 import User from "./Screens/User";
 import LoginFailed from "./Screens/LoginFailed";
 import Chat from "./MessageApp";
-import SignUpButton from "./Screens/SignUpButton";
+import Redirect from "./Screens/Redirect";
 import Cookies from "js-cookie";
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
                   <Route path="/signup" component={SignUp} />
                   <Route path="/login" component={Login}/>
                   <Route path="/loginFailed" component={LoginFailed}/>
-                  <Route path="/redirect" component={SignUpButton}/>
+                  <Route path="/redirect" component={Redirect}/>
                   <Route path="/aboutus" component={About} />
                   <Route path="/whatwedo" component={WWD} />
                   <Route path="/reviews" component={Reviews} />

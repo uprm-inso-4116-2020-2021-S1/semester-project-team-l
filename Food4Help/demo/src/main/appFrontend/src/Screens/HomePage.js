@@ -106,7 +106,6 @@ export default function HomePage(props) {
                       key={`${item.id}`}
                       button
                       component="a"
-<<<<<<< HEAD
                       onClick={()=>{
                         if(Cookies.get("LoggedIn") === "true"){
                           history.push("/company?comp=" + `${item.name}`)
@@ -114,13 +113,6 @@ export default function HomePage(props) {
                         }
                         else{
                           history.push("/redirect")
-=======
-                      onClick={() => {
-                        if (Cookies.get("LoggedIn") === "true") {
-                          history.push("/company?comp=" + `${item.name}`);
-                        } else {
-                          history.push("/signupButton");
->>>>>>> 68dc019e2891bae8ec7ca81c24ac6751207a8fa5
                         }
                       }}
                     >

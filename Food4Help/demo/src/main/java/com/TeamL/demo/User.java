@@ -20,6 +20,10 @@ public class User implements UserDetails {
     private String id;
     private String firstName;
     private String lastName;
+    public String companyName;
+    public String entity;
+    public boolean organization;
+    public String phoneNumber;
     @Field("email")
     private String email;
     private String password;
@@ -38,7 +42,37 @@ public class User implements UserDetails {
     public User(){
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
 
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getEntity() {
+        return entity;
+    }
+
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
+
+    public boolean isOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(boolean organization) {
+        this.organization = organization;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     //Getter and setter
     public void setPassword(String password) {

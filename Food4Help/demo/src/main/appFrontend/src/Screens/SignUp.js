@@ -42,14 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const [submitted, setSubmitted] = useState(false);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [companyName, setCompanyName] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
-  const [entity, setEntity] = useState(null);
+  const [entity, setEntity] = useState(false);
   const [category, setCategory] = useState(null);
   const history = useHistory();
   const companyOptions = [
@@ -62,7 +61,16 @@ export default function SignUp() {
     { value: "organization", label: "Organization" },
   ];
 
-
+  const addComp = async () => {
+    await axios({
+      method: "post",
+      url: "http://localhost:8080/api/comps/add", data: {name: companyName}})
+      .then((response) => {
+        if(response.data){
+          console.log(response.data)
+        }
+      })
+  }
   const register = async () => {
     await axios({
       method: "post",
@@ -73,16 +81,14 @@ export default function SignUp() {
         email: email,
         password: password,
         companyName: companyName,
+        entity: category,
         phoneNumber: phoneNumber,
-        category: category,
       },
     }).then((response) => {
       if (response.data) {
         history.push("/login");
-        console.log(response.data);
       }
     });
-    console.log("Submited");
   };
 
   return (
@@ -160,7 +166,14 @@ export default function SignUp() {
               />
             </Grid>
             <Select
-              onChange={(e) => setEntity(e.value)}
+              onChange={(e) => {
+                if(e.value === "organization"){
+                  setEntity(false);
+                }
+                else{
+                  setEntity(true);
+                }
+              }}
               className={classes.select}
               options={entityOptions}
             />
@@ -194,23 +207,18 @@ export default function SignUp() {
                 autoComplete="phone"
               />
             </Grid>
-            {/* <Grid item xs={12}>
-                    <TextField
-                     variant="outlined"
-                     required
-                     fullWidth
-                     name="category"
-                     label="Category"
-                     type="category"
-                     id="category"
-                     autoComplete="cat"
-                     />
-                  </Grid> */}
-            <Select
+                  
+              {entity ?(
+              <div className={classes.select}>
+              <Select
               onChange={(e) => setCategory(e.value)}
               className={classes.select}
-              options={companyOptions}
-            />
+              options={companyOptions}/>
+              </div>):
+              (<div></div>)
+              }
+              
+              
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -225,6 +233,7 @@ export default function SignUp() {
             color="primary"
             href="#"
             onClick={() => {
+              addComp();
               register();
             }}
             className={classes.submit}

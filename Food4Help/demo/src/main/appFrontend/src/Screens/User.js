@@ -61,7 +61,6 @@ export default function User() {
   const [nameEntity, setNameEntity] = useState(null);
   const [phone, setPhone] = useState(null);
   const [category, setCategory] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
 
   const companyOptions = [
     { value: "supermarket", label: "Supermarket" },
@@ -79,10 +78,11 @@ export default function User() {
       url: "http://localhost:8080/user/"+ Cookies.get("User")
     }).then((response) => {
       if (response.data) {
-        console.log(response.data)
-        setCurrentUser(response.data);
         setName(response.data.firstName + " " + response.data.lastName);
-        setEmail(response.data.email)
+        setEmail(response.data.email);
+        setNameEntity(response.data.entity);
+        setPhone(response.data.phoneNumber);
+        setPassword(response.data.password);
       }
     });
   };
@@ -176,8 +176,8 @@ export default function User() {
                            autoFocus
                          />
                            }
-                           {!isEdit ? 
-                           <Typography variant="h6">
+                           {/* {!isEdit ? 
+                           <Typography type= "password" variant="h6">
                              Password: {password}
                            </Typography> : 
                            <TextField
@@ -186,7 +186,7 @@ export default function User() {
                            required
                            fullWidth
                            value={password}
-                           type="text"
+                           type="password"
                            onChange={passwordChangeHandler}
                            id="password"
                            label="Password"
@@ -194,10 +194,10 @@ export default function User() {
                            autoComplete="password"
                            autoFocus
                          />
-                           }
+                           } */}
                            {!isEdit ? 
                            <Typography variant="h6">
-                             Entity: {entity}
+                             Entity: {nameEntity}
                            </Typography> : 
                            <Select
                            onChange={(e) => setEntity(e.value)}
@@ -205,25 +205,25 @@ export default function User() {
                            options={entityOptions}
                          />
                            }
-                           {!isEdit ? 
-                           <Typography variant="h6">
-                             Company or Organization: {nameEntity}
-                           </Typography> : 
-                           <TextField
-                           variant="outlined"
-                           margin="normal"
-                           required
-                           fullWidth
-                           value={nameEntity}
-                           type="text"
-                           onChange={nameEntityChangeHandler}
-                           id="nameEntity"
-                           label="Name Entity"
-                           name="nameEntity"
-                           autoComplete="nameEntity"
-                           autoFocus
-                         />
-                           }
+                        {/* //    {!isEdit ? 
+                        //    <Typography variant="h6">
+                        //      Company or Organization: {nameEntity}
+                        //    </Typography> : 
+                        //    <TextField
+                        //    variant="outlined"
+                        //    margin="normal"
+                        //    required  
+                        //    fullWidth
+                        //    value={nameEntity}
+                        //    type="text"
+                        //    onChange={nameEntityChangeHandler}
+                        //    id="nameEntity"
+                        //    label="Name Entity"
+                        //    name="nameEntity"
+                        //    autoComplete="nameEntity"
+                        //    autoFocus
+                        //  />
+                        //    } */}
                            {!isEdit ? 
                            <Typography variant="h6">
                              Phone Number: {phone}
@@ -243,7 +243,7 @@ export default function User() {
                            autoFocus
                          />
                            }
-                           {!isEdit ? 
+                           {/* {!isEdit ? 
                            <Typography variant="h6">
                              Category Company: {category}
                            </Typography> : 
@@ -252,7 +252,7 @@ export default function User() {
                            className={classes.select}
                            options={companyOptions}
                          />
-                           }
+                           } */}
                     </Paper>
                     <div className={classes.buttonLayout}>
                     {!isEdit ? 
@@ -266,7 +266,7 @@ export default function User() {
                     </div>
             </Grid>
        </div>
-      <Footer title="" description="Food4Help" />
+      <Footer/>
     </React.Fragment>
   );
 }
