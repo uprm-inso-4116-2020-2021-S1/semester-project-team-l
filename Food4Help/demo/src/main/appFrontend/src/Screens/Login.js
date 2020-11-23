@@ -41,12 +41,7 @@ export default function Login(props) {
   const classes = useStyles();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [foundInDB, setFoundInDB] = useState(false);
-  const [ID, setID] = useState(null);
   const history = useHistory();
-  console.log(props)
-
-
 
   const isUserLogged = async () => {
     await axios({
@@ -61,13 +56,16 @@ export default function Login(props) {
         Cookies.set("LoggedIn", "true");
         history.push("/");
       }
+      else{
+        history.push("/loginFailed")
+      }
     });
     await axios({
       method: "GET",
       url: "http://localhost:8080/getUser"
     }).then((response) => {
       if(response.data){
-        setID(response.data);
+        Cookies.set("User", response.data);
       }
     })
   };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../HP/Header';
 import Footer from '../HP/Footer';
@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import Select from "react-select";
+import Cookies from 'js-cookie';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -53,18 +54,14 @@ const sections = [
 export default function User() {
 
   const [isEdit, setIsEdit] = useState(false);
-  const [name, setName] = useState("Juan Perez Torres");
-  const [email, setEmail] = useState("juan.perez@upr.edu");
-  const [password, setPassword] = useState("password");
-  const [entity, setEntity] = useState("Company");
-  const [nameEntity, setNameEntity] = useState("eat4less");
-  const [phone, setPhone] = useState("1234567890");
-  const [category, setCategory] = useState("fast-food");
-  const [gender, setGender] = useState("Male");
-  const [age, setAge] = useState("24");
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [entity, setEntity] = useState(null);
+  const [nameEntity, setNameEntity] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [category, setCategory] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [ID, setID] = useState(null);
 
   const companyOptions = [
     { value: "supermarket", label: "Supermarket" },
@@ -77,43 +74,15 @@ export default function User() {
   ];
 
   const fetchData = async () => {
-    let id = null;
     await axios({
       method: "GET",
-      url: "http://localhost:8080/getStatus",
+      url: "http://localhost:8080/user/"+ Cookies.get("User")
     }).then((response) => {
       if (response.data) {
-        setLoggedIn(response.data);
-      }
-    });
-    await axios({
-      method: "GET",
-      url: "http://localhost:8080/getUser",
-    }).then((response) => {
-      if (response.data) {
-        setID(response.data);
-        id = response.data
-        console.log(id)
-      }
-    });
-    await axios({
-      method: "GET",
-      url: "http://localhost:8080/user/"+ id
-    }).then((response) => {
-      if (response.data) {
-        setCurrentUser(response.data);
         console.log(response.data)
-      }
-    });
-    await axios({
-      method: "PUT",
-      url: "http://localhost:8080/updateStatus",
-      params: {
-        status: loggedIn,
-      }
-    }).then((response) => {
-      if (response.data) {
-        setLoggedIn(response.data);
+        setCurrentUser(response.data);
+        setName(response.data.firstName + " " + response.data.lastName);
+        setEmail(response.data.email)
       }
     });
   };
@@ -154,13 +123,9 @@ export default function User() {
     setCategory(e.target.value);
   };
 
-  const genderChangeHandler = (e) => {
-    setGender(e.target.value);
-  };
-
-  const ageChangeHandler = (e) => {
-    setAge(e.target.value);
-  };
+  useEffect(() => {
+    fetchData();
+  },[])
 
   const classes = useStyles();
   return (
@@ -286,44 +251,6 @@ export default function User() {
                            onChange={(e) => setCategory(e.value)}
                            className={classes.select}
                            options={companyOptions}
-                         />
-                           }
-                          {!isEdit ? 
-                           <Typography variant="h6">
-                             Gender: {gender}
-                           </Typography> : 
-                           <TextField
-                           variant="outlined"
-                           margin="normal"
-                           required
-                           fullWidth
-                           value={gender}
-                           type="text"
-                           onChange={genderChangeHandler}
-                           id="gender"
-                           label="Gender"
-                           name="gender"
-                           autoComplete="gender"
-                           autoFocus
-                         />
-                           }
-                           {!isEdit ? 
-                           <Typography variant="h6">
-                             Age: {age}
-                           </Typography> : 
-                           <TextField
-                           variant="outlined"
-                           margin="normal"
-                           required
-                           fullWidth
-                           value={age}
-                           type="text"
-                           onChange={ageChangeHandler}
-                           id="age"
-                           label="Age"
-                           name="age"
-                           autoComplete="age"
-                           autoFocus
                          />
                            }
                     </Paper>

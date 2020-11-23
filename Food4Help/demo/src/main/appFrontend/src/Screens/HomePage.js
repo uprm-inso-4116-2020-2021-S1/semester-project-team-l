@@ -15,6 +15,7 @@ import SearchBar from "material-ui-search-bar";
 import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -53,6 +54,7 @@ const sidebar = {
 export default function HomePage(props) {
   const [comps, setComps] = useState([]);
   const [active, setActive] = useState(false);
+  const history = useHistory();
   const getComps = async () => {
     const result = await axios("http://localhost:8080/api/comps");
     setComps(result.data);
@@ -101,7 +103,14 @@ export default function HomePage(props) {
                       key={`${item.id}`}
                       button
                       component="a"
-                      href={"/company?comp=" + `${item.name}`}
+                      onClick={()=>{
+                        if(Cookies.get("LoggedIn") === "true"){
+                          history.push("/company?comp=" + `${item.name}`)
+                        }
+                        else{
+                          history.push("/signupButton")
+                        }
+                      }}
                     >
                       <ListItemIcon>
                         <Avatar alt="CompIcon" src={`${item.picUrl}`} />

@@ -28,11 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const [ID, setID] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [userID, setUserID] = useState(null);
   const { title } = props;
   const [sections, setSections] = useState([]);
-  const [tick, setTick] = useState(false);
   const history = useHistory();
   const [active, setActive ] = useState(false);
 
@@ -91,12 +89,20 @@ export default function Header(props) {
       setActive(true);
     }
   }
+
+  const checkUser = () => {
+    if(!Cookies.get("User") === ""){
+      setUserID(Cookies.get("User"))
+    }
+  }
+
   const loadSections = () => {
     setSections(props.sections);
   }
 
   useEffect(() => {
     checkActive();
+    checkUser();
     loadSections();
   }, [active])
 
@@ -123,14 +129,15 @@ export default function Header(props) {
         </Typography>
         {active ? (
           <div>
-            <Typography>{ID}</Typography>
+            <Typography>{userID}</Typography>
             <Button
               variant="outlined"
               size="small"
               onClick={() => {
                 Cookies.set("LoggedIn", "false");
+                Cookies.set("User", "");
                 setActive(false);
-
+                history.push("/")
               }}
             >
               Log out

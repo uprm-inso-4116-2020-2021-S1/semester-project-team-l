@@ -9,12 +9,10 @@ import WWD from "./Screens/WhatWeDo";
 import Register from "./Screens/RegisterCompany";
 import Company from "./Screens/Company";
 import Reviews from "./Screens/Reviews";
-import Filter from "./Screens/FilterPage";
 import User from "./Screens/User";
+import LoginFailed from "./Screens/LoginFailed";
 import Chat from "./MessageApp";
-import Food from "./FoodComponent";
-import Auth from "./Auth";
-import axios from "axios";
+import SignUpButton from "./Screens/SignUpButton";
 import Cookies from "js-cookie";
 
 function App() {
@@ -45,20 +43,18 @@ function App() {
                   <Route path="/reviews" component={Reviews} />
                   <Route path="/user" component={User} />
                   <Route path="/chat" component={Chat} />
-                  <Route path="/food" component={Food} />
                 </div>
               ) : (
                 <div>
                   <Route path="/signup" component={SignUp} />
-                  <Route path="/login">
-                    <Login />
-                  </Route>
+                  <Route path="/login" component={Login}/>
+                  <Route path="/loginFailed" component={LoginFailed}/>
+                  <Route path="/signupButton" component={SignUpButton}/>
                   <Route path="/aboutus" component={About} />
                   <Route path="/whatwedo" component={WWD} />
                   <Route path="/register" component={Register} />
                   <Route path="/reviews" component={Reviews} />
                   <Route path="/chat" component={Chat} />
-                  <Route path="/food" component={Food} />
                 </div>
               )}
               <Route component={Error} />
