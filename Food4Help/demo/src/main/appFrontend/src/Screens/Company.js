@@ -35,13 +35,16 @@ const useStyles = makeStyles((theme) => ({
     media: {
       height: 240,
     },
+
+    Grid: {
+      margin: 30,
+    }
 }));
 
 let search = window.location.search;
 let params = new URLSearchParams(search);
 let compName = params.get('comp');
-console.log("Company name: " + compName)
-
+//console.log("Company name: " + compName)
 
 const sections = [];
 
@@ -60,47 +63,47 @@ export default function Company() {
 
 
     const [food, setFood] = useState([]);
+    
+    const[comps, setComps] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
-          const result = await axios(
-            'http://localhost:8080/api/food',
-          );
-          setFood(result.data);
+          const foodResult = await axios('http://localhost:8080/api/food/searchByComp?comp=' + compName);
+          setFood(foodResult.data); 
+          const compResponse = await axios('http://localhost:8080/api/comps/searchByName?comp=' + compName);
+          setComps(compResponse.data);
         };
         fetchData();
-      }, [setFood]);
-
+      }, [setFood], {setComps});
     return (
       <React.Fragment>
         <CssBaseline />
 
         {/* Header */}
         <Container maxWidth="lg">
-          <Header title="SLEEPYBOIS INC." sections={sections} />
+          <Header title={comps.name} sections={sections} />
         </Container>
 
         {/* Main Grid of page */}
-        <Grid container spacing={3} alignItems='center' justify='center' direction='row'>
+        <Grid container spacing={3} direction='row' className={classes.Grid}>
           
           {/* Card displaying Company */}
-          <Grid item xs={6} sm={3} alignItems='center' justify='center'>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image="https://i.redd.it/u69xswcfr7941.png"
-                  title="Bunch of Potats"
+                  image={comps.picUrl}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    SleepyBois Inc.
+                    {comps.name}
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    We grow the best Potatos in the world.
+                    COMPDESCRITION
                   </Typography>
                   <Rating
-                  value={5}
+                  value={Number(comps.score)}
                   name="rating"
                   readOnly="true"
                   />
@@ -108,19 +111,19 @@ export default function Company() {
                     Open hours:
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    0:00 - 24:00
+                    COMP HOURS
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
                     Phone:
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    (+1)787-420-6996
+                    COMP PHONE
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
                     Location:
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    Imagine there's an adress here plz
+                    COMP LOCATION
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -128,7 +131,7 @@ export default function Company() {
           </Grid>
 
           {/* Grid Cointaining Food Items and search! */}
-          <Grid item xs={6} sm={6} alignItems='center' justify='center'>
+          <Grid item xs={6} sm={6}>
             {/* SearchBar */}
             <Grid item xs={6} sm={6}>
               <SearchBar

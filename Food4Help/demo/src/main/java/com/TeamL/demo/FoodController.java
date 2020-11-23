@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,13 +27,13 @@ public class FoodController
         return foodRepository.findAll();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/food/{id}")
     public Food getOne(@PathVariable String id) {
         return foodRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException());
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/food/{id}")
     public Food update(@PathVariable String id, @RequestBody Food updatedFood) {
         Food food = foodRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException());
@@ -43,7 +44,7 @@ public class FoodController
         return foodRepository.save(food);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/food/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void delete(@PathVariable String id) {
         Food food = foodRepository.findById(id)
@@ -53,7 +54,8 @@ public class FoodController
 
     @GetMapping("/food/searchByComp")
     public List<Food> searchByComp(@RequestParam(name = "comp") String comp) {
-        return foodRepository.findByComp(comp);
-
+        List<Food> result = new ArrayList<>();
+        result = foodRepository.findByCompany(comp);
+        return result;
     }
 }
