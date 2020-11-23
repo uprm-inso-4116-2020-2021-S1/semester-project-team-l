@@ -19,7 +19,7 @@ export default function SignUpButton() {
         variant="contained"
         align="center"
         color="primary"
-        href="/signup"
+        href="/login"
         style={{
           margin:0,
           position:"absolute",
@@ -27,7 +27,7 @@ export default function SignUpButton() {
         }}
         className={classes.submit}
       >
-        Go and Register
+        Go and Login
       </Button>
     </div>
   );

@@ -65,6 +65,7 @@ export default function HomePage(props) {
     }
   };
 
+
   useEffect(() => {
     getComps();
     checkActive();
@@ -106,9 +107,10 @@ export default function HomePage(props) {
                       onClick={()=>{
                         if(Cookies.get("LoggedIn") === "true"){
                           history.push("/company?comp=" + `${item.name}`)
+                          window.location.reload()
                         }
                         else{
-                          history.push("/signupButton")
+                          history.push("/redirect")
                         }
                       }}
                     >

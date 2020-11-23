@@ -34,55 +34,6 @@ export default function Header(props) {
   const history = useHistory();
   const [active, setActive ] = useState(false);
 
-  // const fetchData = async () => {
-  //   let id = null;
-  //   await axios({
-  //     method: "GET",
-  //     url: "http://localhost:8080/getStatus",
-  //   }).then((response) => {
-  //     if (response.data) {
-  //       setLoggedIn(response.data);
-  //     }
-  //   });
-  // await axios({
-  //   method: "GET",
-  //   url: "http://localhost:8080/getUser",
-  // }).then((response) => {
-  //   if (response.data) {
-  //     setID(response.data);
-  //     id = response.data
-  //     console.log(id)
-  //   }
-  // });
-  // await axios({
-  //   method: "GET",
-  //   url: "http://localhost:8080/user/"+ id
-  // }).then((response) => {
-  //   if (response.data) {
-  //     setCurrentUser(response.data);
-  //     console.log(response.data)
-  //   }
-  // });
-  // await axios({
-  //   method: "PUT",
-  //   url: "http://localhost:8080/updateStatus",
-  //   params: {
-  //     status: loggedIn,
-  //   }
-  // }).then((response) => {
-  //   if (response.data) {
-  //     setLoggedIn(response.data);
-  //   }
-  // });
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // },[tick])
-
-  // const forceUpdate = () =>{
-  //   setTick(!tick)
-  // }
 
   const checkActive = () => {
     if(Cookies.get("LoggedIn") === "true"){
@@ -138,6 +89,7 @@ export default function Header(props) {
                 Cookies.set("User", "");
                 setActive(false);
                 history.push("/")
+                window.location.reload();
               }}
             >
               Log out
