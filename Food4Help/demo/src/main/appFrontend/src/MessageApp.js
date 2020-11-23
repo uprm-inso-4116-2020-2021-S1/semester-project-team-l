@@ -14,7 +14,7 @@ const PUBLISH_ENDPOINT = "/app/chat";
 export default class MessageApp extends React.Component {
   state = {
     connected: false,
-    messages: []
+    messages: [],
   };
 
   componentDidMount() {
@@ -23,11 +23,11 @@ export default class MessageApp extends React.Component {
 
   createConnection = () => {
     let connectCallback = () => {
-        //console.log('Connected'+frame);
+      //console.log('Connected'+frame);
       this.client.subscribe(PUBLIC_TOPIC, this.handleMessage);
 
       this.setState({
-        connected: true
+        connected: true,
       });
     };
 
@@ -42,9 +42,10 @@ export default class MessageApp extends React.Component {
     var sock = new SockJS(WEBSOCKET_URL);
     this.client = Stomp.over(sock);
     //this.client.connect({}, connectCallback, errorCallback);
-    sock.onopen = function(){
-    console.log('open')};
-    this.client.connect({},connectCallback)
+    sock.onopen = function () {
+      console.log("open");
+    };
+    this.client.connect({}, connectCallback);
   };
 
   closeConnection = () => {
@@ -54,14 +55,14 @@ export default class MessageApp extends React.Component {
     }
 
     this.setState({
-      connected: false
+      connected: false,
     });
   };
 
   handleMessage = (payload) => {
     if (payload.body) {
       this.setState((prevState) => ({
-        messages: [...prevState.messages, JSON.parse(payload.body)]
+        messages: [...prevState.messages, JSON.parse(payload.body)],
       }));
     }
   };

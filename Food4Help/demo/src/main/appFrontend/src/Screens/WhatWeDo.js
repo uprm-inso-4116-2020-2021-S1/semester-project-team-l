@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
 
 const sections = [
   { title: 'About Us', url: '/aboutus' },
-  { title: 'Home Page', url: '/' },
-  { title: 'Register Your Company', url: '/register' },
-  { title: 'Companies Page', url: '/filter' },
-  { title: 'User Profile', url: '/user' },
 ];
 
 export default function WhatWeDo() {

@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 
