@@ -1,4 +1,4 @@
-/*import React, {Component} from 'react';
+import React, {Component} from 'react';
 import List from "@material-ui/core/es/List/List";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
@@ -109,4 +109,3 @@ Chat.propTypes = {
 };
 
 export default withStyles(styles)(Chat);
-*/

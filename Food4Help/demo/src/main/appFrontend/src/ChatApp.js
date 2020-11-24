@@ -1,35 +1,35 @@
-/*import React, {Component} from 'react';
+import React, {Component} from 'react';
 import LoginForm from './LoginForm.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from "./Header";
 import Chat from "./Chat";
 import SockJsClient from 'react-stomp';
 
-class App extends Component {
+class ChatApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false,
+            //loggedIn: false,
             messageText: '',
             userName: null,
             messages: [],
-            loginFormInvalid: true,
+            //loginFormInvalid: true,
         }
     }
 
     handleLogin = () => {
         if (this.state.userName) {
-            this.setState({loggedIn: true});
+            //this.setState({loggedIn: true});
             this.clientRef.sendMessage("/app/chat.addUser",
                 JSON.stringify({sender: this.state.userName, type: 'JOIN'}));
         } else {
-            this.setState({loginFormInvalid: true})
+            //this.setState({loginFormInvalid: true})
         }
     };
 
     handleLogout = () => {
         this.setState({
-            loggedIn: false,
+           // loggedIn: false,
             messages: []
         });
         this.clientRef.disconnect();
@@ -89,5 +89,4 @@ class App extends Component {
 
 }
 
-export default App;
-*/
+export default ChatApp;
