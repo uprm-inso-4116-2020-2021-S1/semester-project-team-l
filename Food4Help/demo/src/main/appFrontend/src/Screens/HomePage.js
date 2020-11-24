@@ -11,12 +11,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import SearchBar from "material-ui-search-bar";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from "@material-ui/core/TextField";
-import SearchField from "react-search-field";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
@@ -34,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 600,
   },
   submit: {
-    //margin: theme.spacing(3, 0, 2),
     flexDirection: "row",
     justifyContent: "around-space",
     display: "flex",
@@ -66,7 +63,6 @@ const sidebar = {
 export default function HomePage(props) {
   const [comps, setComps] = useState([]);
   const [active, setActive] = useState(false);
-  const [isSelect, setIsSelect] = useState(false);
   const history = useHistory();
   const [filter, setFilter] = useState("");
   const [companyNames, setCompanyNames] = useState([]);
@@ -75,38 +71,24 @@ export default function HomePage(props) {
     const result = await axios("http://localhost:8080/api/comps");
     setComps(result.data);
   };
+
   const checkActive = () => {
     if (Cookies.get("LoggedIn") === "true") {
       setActive(true);
     }
   };
 
-
   useEffect(() => {
     getComps();
     checkActive();
   }, [active]);
 
-  // useEffect(() => {
-  //   console.log(comps);
-  // },[setComps]);
-
   const classes = useStyles();
   const [] = useState([]);
   const [] = useState(true);
 
-  const searchBarChangeHandler = (e) => {
-    setFilter(e.target);
-  };
-
-  const requestChangeHandler = () => {
-    
-  };
-
   const companyHandleOptions = () => comps.map((item) => (
-    // console.log("Here are the name of the companies: " + item.name)
     console.log("data for search bar: " + item.name + "is pushed to an array " + companyOptions.push(item.name))
-    //console.log("data for search bar: " + item.name + "is pushed to an array " + setCompanies()
   ));
 
   const companyOptions = [
@@ -120,48 +102,19 @@ export default function HomePage(props) {
     console.log("company selected: " + filter);
   },[comps]);
 
-  const onClickHandler = () => {
-    
-      if(Cookies.get("LoggedIn") === "true"){
-        history.push("/company?comp=" + `${companyOptions}`)
-        window.location.reload()
-      }
-    
-  };
-
 
   const onSelectHandler = (e) => {
-
     
-    setIsSelect(true);
-    console.log("valor e : " + e)
     setFilter(e);
     console.log("On select company: " + filter);
     console.log("filter is a company?: " + companyOptions.filter(name => name === filter).map(names => names));
     console.log("companyName variable: " + companyNames);
     
-      console.log("after selected company: " + filter);
-      //setIsSelect(false);
-      //setFilter(e.target.value);
-
-      if(Cookies.get("LoggedIn") === "true"){
-        history.push("/company?comp=" + `${filter}`)
-        window.location.reload()
-      }
+    if(Cookies.get("LoggedIn") === "true"){
+      history.push("/company?comp=" + `${filter}`)
+      window.location.reload()
+    }
     
-
-    // if (!isSelect) {
-    //   setIsSelect(true);
-    //   setFilter(e.target.value);
-    // }
-    // if(Cookies.get("LoggedIn") === "true"){
-    //   history.push("/company?comp=" + `${filter}`)
-    //   window.location.reload()
-    // }
-    
-    // else{
-    //   history.push("/redirect")
-    // }
 };
 
   return (
@@ -181,30 +134,9 @@ export default function HomePage(props) {
           />
           <Grid item xs={6} sm={6} alignItems="center" justify="center">
             <Grid item xs={12} sm={6} className={classes.submit} >
-              {/* <SearchBar
-                className={classes.margin}
-                placeholder="Search Company..."
-                onChange={searchBarChangeHandler}
-                onRequestSearch={requestChangeHandler}
-                value={filter}
-              
-              /> */}
-              {/* <SearchField
-                placeholder="Search Company..."
-                onChange={searchBarChangeHandler}
-                //searchText="This is initial search text"
-                //classNames="test-class"
-              /> */}
               <Autocomplete
-                
                 options={companyNames}
                 getOptionLabel={option => option}
-                
-                //getOptionSelected={onSelectHandler}
-                //clearOnEscape={true}
-                //value={filter}
-                // onChange={onSelectHandler}
-                
                 style={{ width: 300 }}
                 renderInput={params => (
                   <TextField
@@ -222,7 +154,6 @@ export default function HomePage(props) {
               type="submit"
               variant="contained"
               color="primary"
-              //href="#"
               onClick={onSelectHandler}
               
               >Enter</Button>
