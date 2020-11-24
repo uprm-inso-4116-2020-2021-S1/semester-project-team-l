@@ -80,7 +80,7 @@ export default function User() {
       if (response.data) {
         setName(response.data.firstName + " " + response.data.lastName);
         setEmail(response.data.email);
-        setNameEntity(response.data.entity);
+        setEntity(response.data.entity);
         setPhone(response.data.phoneNumber);
         setPassword(response.data.password);
       }
@@ -197,7 +197,7 @@ export default function User() {
                            } */}
                            {!isEdit ? 
                            <Typography variant="h6">
-                             Entity: {nameEntity}
+                             Entity: {entity}
                            </Typography> : 
                            <Select
                            onChange={(e) => setEntity(e.value)}
