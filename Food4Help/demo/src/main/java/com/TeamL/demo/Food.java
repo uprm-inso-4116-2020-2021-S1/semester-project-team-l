@@ -1,5 +1,7 @@
 package com.TeamL.demo;
 
+import org.springframework.data.annotation.Id;
+
 public class Food
 {
     private String name;
@@ -8,11 +10,14 @@ public class Food
     private int SKU;
     private String company;
     private String picUrl;
+    @Id
+    private String _ID;
 
 
 
     public Food()
     {
+        _ID = "";
         name = "";
         type = "";
         amount = 0;
@@ -20,14 +25,23 @@ public class Food
         company = "";
         picUrl = "";
     }
-    public Food(String FoodName, String FoodType, int FoodAmount, int FoodSKU , String comp, String pic)
+    public Food(String id, String FoodName, String FoodType, int FoodAmount, int FoodSKU , String comp, String pic)
     {
+        this._ID = id;
         this.name = FoodName;
         this.type = FoodType;
         this.amount = FoodAmount;
         this.SKU = FoodSKU;
         this.company = comp;
         this.picUrl = pic;
+    }
+
+    public String get_ID() {
+        return _ID;
+    }
+
+    public void set_ID(String _ID) {
+        this._ID = _ID;
     }
 
     public String getPicUrl() { return picUrl; }

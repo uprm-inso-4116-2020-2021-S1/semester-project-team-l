@@ -45,10 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [
-  { title: 'Home Page', url: '/' },
   { title: 'About Us', url: '/aboutus' },
   { title: 'What we do', url: '/whatwedo' },
-  { title: 'Companies Page', url: '/company' },
 ];
 
 export default function User() {
@@ -135,9 +133,9 @@ export default function User() {
         <Header title="User Profile" sections={sections} />
       </Container>
       <div className={classes.root}>
-            <Avatar alt="Cindy Baker" src="https://source.unsplash.com/random" className={classes.large}/>
+            <Avatar alt="Avatar" src="http://via.placeholder.com/640x360" className={classes.large}/>
             <Grid item xs={12} md={4}>
-                         <Paper elevation={0} className={classes.sidebarAboutBox}>
+                         <div elevation={0} className={classes.sidebarAboutBox}>
                            {!isEdit ? 
                            <Typography variant="h6">
                              Name: {name}
@@ -253,13 +251,13 @@ export default function User() {
                            options={companyOptions}
                          />
                            } */}
-                    </Paper>
+                    </div>
                     <div className={classes.buttonLayout}>
                     {!isEdit ? 
-                    (<Button onClick={handleEdit}>
+                    (<Button variant="contained" onClick={handleEdit}>
                       Edit
                     </Button>) :
-                    (<Button onClick={handleSave}>
+                    (<Button variant="contained" onClick={handleSave}>
                       Save
                     </Button>)
                     }

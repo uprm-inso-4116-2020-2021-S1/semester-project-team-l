@@ -20,11 +20,33 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Rating from "@material-ui/lab/Rating";
+import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
+import Button from '@material-ui/core/Button';
 import axios from "axios";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import Modal from '@material-ui/core/Modal';
+import CloseIcon from '@material-ui/icons/Close';
+import Modal from 'react-modal';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const customModalStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -43,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(5),
+    right: theme.spacing(5),
   },
 }));
 
@@ -102,27 +129,75 @@ export default function Company() {
       transform: `translate(-${top}%, -${left}%)`,
     };
   }
-  
-  const [modalStyle] = React.useState(getModalStyle);
+  const [name, setName] = useState(null);
+  const [type, setType] = useState(null);
+  const [amount, setAmount] = useState(null);
+  const [SKU, setSKU] = useState(null);
+  const [picUrl, setPicUrl] = useState(null);
+
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
+  const handleSnackOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
     setOpen(false);
   };
+  
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-      <Modal />
-    </div>
-  );
+  const addFood = async () => {
+    await axios.post('http://localhost:8080/api/food/add', {
+      name: name,
+      type: type,
+      amount: amount,
+      SKU: SKU,
+      company: comps.name,
+      picUrl: picUrl
+
+    })
+    console.log('Food posted!');
+    closeModal();
+    // handleSnackOpen();
+    window.location.reload();
+  }
+
+  const addOne = async (foodItemId) => {
+    let foodItem = await (await axios.get('http://localhost:8080/api/food/' + foodItemId)).data;
+    await axios.put('http://localhost:8080/api/food/' + foodItemId,{
+      name: foodItem.name,
+      type: foodItem.type,
+      amount: foodItem.amount + 1
+    })
+    window.location.reload();
+  }
+  const removeOne = async (foodItemId) => {
+    let foodItem = await (await axios.get('http://localhost:8080/api/food/' + foodItemId)).data;
+    await axios.put('http://localhost:8080/api/food/' + foodItemId,{
+      name: foodItem.name,
+      type: foodItem.type,
+      amount: foodItem.amount - 1
+    })
+    window.location.reload();
+  }
+
+  const removeFood = async (foodItemId) => {
+    await axios.delete('http://localhost:8080/api/food/' + foodItemId);
+    window.location.reload();
+  }
+
+  const [modalIsOpen,setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+  }
 
   return (
     <React.Fragment>
@@ -202,7 +277,7 @@ export default function Company() {
           </Grid>
 
           {/* Food list */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9}>
             <List className={classes.root}>
               {food.map((item) => (
                 <ListItem key={`${item.id}`}>
@@ -215,24 +290,103 @@ export default function Company() {
                       "Amount: " + `${item.amount}` + " Type: " + `${item.type}`
                     }
                   />
+                  <ButtonGroup variant="contained" color="primary">
+                    <Button onClick={() => {
+                      addOne(`${item._ID}`)
+                    }}>+</Button>
+                    <Button onClick={() => {
+                      removeOne(`${item._ID}`)
+                    }}>-</Button>
+                     <Button onClick={() => {
+                      removeFood(`${item._ID}`)
+                    }}>DELETE</Button>
+                  </ButtonGroup>
                 </ListItem>
               ))}
             </List>
           </Grid>
         </Grid>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-      {body}
-      </Modal>
+        
       </Grid>
-      <Fab variant="extended" color="primary" aria-label="add" onClick={handleOpen}>
+      <Grid>
+      <Fab variant="extended" className={classes.fab} color="primary" aria-label="add" onClick={openModal}>
         <AddIcon  className={classes.extendedIcon}/>
         Add Food
       </Fab>
+      <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customModalStyles}
+          contentLabel="Example Modal"
+        >
+          <div alignment='right'>
+          <Button onClick={closeModal}>
+            <CloseIcon/>
+          </Button>
+          </div>
+          <div>
+            <h1>Add food</h1>
+          </div>
+          <form>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            label="Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            name="amount"
+            autoComplete="amount"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            label="Type"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            name="type"
+            autoComplete="type"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            label="SKU"
+            value={SKU}
+            onChange={(e) => setSKU(e.target.value)}
+            name="SKU"
+            autoComplete="SKU"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="Url to image"
+            value={picUrl}
+            onChange={(e) => setPicUrl(e.target.value)}
+            name="picUrl"
+          />
+            <Button onClick={addFood} variant="contained"> <AddIcon  className={classes.extendedIcon}/>Add</Button>
+          </form>
+        </Modal>
+      </Grid>
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right', }} open={open} autoHideDuration={1000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Food Added! Refresh page to see change.
+        </Alert>
+      </Snackbar>
       <Footer />
     </React.Fragment>
   );

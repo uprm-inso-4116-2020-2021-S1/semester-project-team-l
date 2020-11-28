@@ -11,12 +11,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import SearchBar from "material-ui-search-bar";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from "@material-ui/core/TextField";
-import SearchField from "react-search-field";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
@@ -53,7 +51,7 @@ const sections = [
 ];
 
 const photo = {
-  image: "https://source.unsplash.com/random",
+  image: "http://via.placeholder.com/1232x123",
 };
 
 const sidebar = {
@@ -63,10 +61,10 @@ const sidebar = {
 };
 
 
-export default function HomePage(props) {
+export default function HomePage() {
   const [comps, setComps] = useState([]);
   const [active, setActive] = useState(false);
-  const [isSelect, setIsSelect] = useState(false);
+  const [, setIsSelect] = useState(false);
   const history = useHistory();
   const [filter, setFilter] = useState("");
   const [companyNames, setCompanyNames] = useState([]);
@@ -95,13 +93,7 @@ export default function HomePage(props) {
   const [] = useState([]);
   const [] = useState(true);
 
-  const searchBarChangeHandler = (e) => {
-    setFilter(e.target);
-  };
 
-  const requestChangeHandler = () => {
-    
-  };
 
   const companyHandleOptions = () => comps.map((item) => (
     // console.log("Here are the name of the companies: " + item.name)
@@ -120,14 +112,6 @@ export default function HomePage(props) {
     console.log("company selected: " + filter);
   },[comps]);
 
-  const onClickHandler = () => {
-    
-      if(Cookies.get("LoggedIn") === "true"){
-        history.push("/company?comp=" + `${companyOptions}`)
-        window.location.reload()
-      }
-    
-  };
 
 
   const onSelectHandler = (e) => {
