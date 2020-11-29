@@ -4,7 +4,6 @@ import Header from '../HP/Header';
 import Footer from '../HP/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -54,20 +53,14 @@ export default function User() {
   const [isEdit, setIsEdit] = useState(false);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [isOrg, setIsOrg] = useState(false);
   const [entity, setEntity] = useState(null);
-  const [nameEntity, setNameEntity] = useState(null);
   const [phone, setPhone] = useState(null);
-  const [category, setCategory] = useState(null);
 
   const companyOptions = [
-    { value: "supermarket", label: "Supermarket" },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "fastfood", label: "Fast-Food" },
-  ];
-  const entityOptions = [
-    { value: "company", label: "Company" },
-    { value: "organization", label: "Organization" },
+    { value: "Supermarket", label: "Supermarket" },
+    { value: "Restaurant", label: "Restaurant" },
+    { value: "Fast-food", label: "Fast-Food" },
   ];
 
   const fetchData = async () => {
@@ -80,17 +73,21 @@ export default function User() {
         setEmail(response.data.email);
         setEntity(response.data.entity);
         setPhone(response.data.phoneNumber);
-        setPassword(response.data.password);
+        setIsOrg(response.data.organization)
       }
     });
+  };
+  const updateUser = async () => {
+    await axios.put("http://localhost:8080/user/" + Cookies.get("User"), {
+      entity: entity,
+      phoneNumber: phone,
+    });
+    
+    window.location.reload();
   };
 
   const handleEdit = () => {
     setIsEdit(true);
-  };
-
-  const handleSave = () => {
-    setIsEdit(false);
   };
 
   const nameChangeHandler = (e) => {
@@ -101,24 +98,14 @@ export default function User() {
     setEmail(e.target.value);
   };
 
-  const passwordChangeHandler = (e) => {
-    setPassword(e.target.value);
-  };
-
   const entityChangeHandler = (e) => {
-    setEntity(e.target.value);
-  };
-
-  const nameEntityChangeHandler = (e) => {
-    setNameEntity(e.target.value);
+    setEntity(e.value);
+    console.log(entity)
   };
 
   const phoneChangeHandler = (e) => {
     setPhone(e.target.value);
-  };
-
-  const categoryChangeHandler = (e) => {
-    setCategory(e.target.value);
+    console.log(phone)
   };
 
   useEffect(() => {
@@ -174,15 +161,18 @@ export default function User() {
                            autoFocus
                          />
                            }
-                           {!isEdit ? 
+                           {!isEdit && !isOrg ? 
                            <Typography variant="h6">
                              Entity: {entity}
                            </Typography> : 
+                           !isOrg ?
                            <Select
-                           onChange={(e) => setEntity(e.value)}
+                           defaultInputValue={entity}
+                           onChange={entityChangeHandler}
                            className={classes.select}
-                           options={entityOptions}
-                         />
+                           options={companyOptions}
+                         /> :
+                            <div></div>
                            }
                            {!isEdit ? 
                            <Typography variant="h6">
@@ -209,7 +199,7 @@ export default function User() {
                     (<Button variant="contained" onClick={handleEdit}>
                       Edit
                     </Button>) :
-                    (<Button variant="contained" onClick={handleSave}>
+                    (<Button variant="contained" onClick={updateUser}>
                       Save
                     </Button>)
                     }

@@ -1,7 +1,6 @@
 import React from "react";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import User from "./Screens/User";
 import ChatInputForm from "./Components/ChatInputForm";
 import ChatMessageList from "./Components/ChatMessageList";
 

@@ -39,6 +39,12 @@ public class UserService implements UserDetailsService {
         return user.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    public User updateUser(@PathVariable String id, User updateUser){
+        User user = userRepositories.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        user.setEntity(updateUser.entity);
+        user.setPhoneNumber(updateUser.phoneNumber);
+        return userRepositories.save(user);
+    }
 
     public Collection<User> findAll() {
         return userRepositories.findAll();

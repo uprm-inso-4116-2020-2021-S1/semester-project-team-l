@@ -4,7 +4,6 @@ import Header from "../HP/Header";
 import Footer from "../HP/Footer";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import SearchBar from "material-ui-search-bar";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import List from "@material-ui/core/List";

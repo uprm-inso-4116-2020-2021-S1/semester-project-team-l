@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -82,6 +82,7 @@ export default function SignUp() {
         password: password,
         companyName: companyName,
         entity: category,
+        organization: entity,
         phoneNumber: phoneNumber,
       },
     }).then((response) => {
@@ -156,7 +157,6 @@ export default function SignUp() {
                 required
                 fullWidth
                 value={password}
-                type="text"
                 onChange={(e) => setPassword(e.target.value)}
                 name="password"
                 label="Password"
@@ -168,10 +168,10 @@ export default function SignUp() {
             <Select
               onChange={(e) => {
                 if(e.value === "organization"){
-                  setEntity(false);
+                  setEntity(true);
                 }
                 else{
-                  setEntity(true);
+                  setEntity(false);
                 }
               }}
               className={classes.select}
@@ -187,7 +187,6 @@ export default function SignUp() {
                 onChange={(e) => setCompanyName(e.target.value)}
                 name="company name"
                 label="Company Name"
-                type="company name"
                 id="company name"
                 autoComplete="cname"
               />
@@ -198,17 +197,16 @@ export default function SignUp() {
                 required
                 fullWidth
                 value={phoneNumber}
-                type="text"
+                type="number"
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 name="phone number"
                 label="Phone Number"
-                type="phone number"
                 id="phone number"
                 autoComplete="phone"
               />
             </Grid>
                   
-              {entity ?(
+              {!entity ?(
               <div className={classes.select}>
               <Select
               onChange={(e) => setCategory(e.value)}

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 export default class ChatInputForm extends React.Component {
   state = {
     username: "",

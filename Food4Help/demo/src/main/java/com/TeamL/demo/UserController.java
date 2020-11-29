@@ -22,6 +22,11 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @PutMapping("/user/{id}")
+    public User updateUser(@PathVariable String id, @RequestBody User updateUser) {
+        return userService.updateUser(id, updateUser);
+    }
+
     @GetMapping("/users")
     public Collection<User> getUsers(){
         return userService.findAll();

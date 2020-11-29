@@ -12,7 +12,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
@@ -66,8 +65,6 @@ export default function HomePage() {
   const history = useHistory();
   const [filter, setFilter] = useState("");
   const [companyNames, setCompanyNames] = useState([]);
-  const [selected, setSelected] = useState([]);
-  const [counter, setCounter] = useState([]);
 
   const getComps = async () => {
     const result = await axios("http://localhost:8080/api/comps");
@@ -86,8 +83,6 @@ export default function HomePage() {
   }, [active]);
 
   const classes = useStyles();
-  const [] = useState([]);
-  const [] = useState(true);
 
   const companyHandleOptions = () =>
     comps.map((item) =>
@@ -108,20 +103,6 @@ export default function HomePage() {
     console.log("company selected: " + filter);
   }, [comps]);
 
-  const onSelectHandler = (e) => {
-    console.log("On select company: " + e);
-    console.log(
-      "filter is a company?: " +
-        companyOptions.filter((name) => name === filter).map((names) => names)
-    );
-    console.log("companyName variable: " + companyNames);
-
-    if (Cookies.get("LoggedIn") === "true") {
-      history.push("/company?comp=" + filter);
-      window.location.reload();
-    }
-  };
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -137,7 +118,7 @@ export default function HomePage() {
             description={sidebar.description}
             archives={sidebar.archives}
           />
-          <Grid item xs={6} sm={6} alignItems="center" justify="center">
+          <Grid item xs={6} sm={6}>
             <Grid item xs={12} sm={6} className={classes.submit}>
               <Autocomplete
                 options={companyNames}
@@ -161,7 +142,7 @@ export default function HomePage() {
                 )}
               />
             </Grid>
-            <Grid item spacing={3} alignItems="center" justify="center">
+            <Grid>
               <Grid item xs={12} sm={9}>
                   <List>
                     {comps.filter(comp => (filter === "") ? (comp === comp):(comp.name === filter)).map((item) => (
@@ -171,7 +152,7 @@ export default function HomePage() {
                         component="a"
                         onClick={() => {
                           if (Cookies.get("LoggedIn") === "true") {
-                            history.push("/company?comp=" + `${item.name}`);
+                            history.push("/company?comp=" + item.name);
                             window.location.reload();
                           } else {
                             history.push("/redirect");
