@@ -365,6 +365,7 @@ export default function Company() {
             <Select
               className={classes.select}
               onChange={(e, value) => setType(value.props.children)}
+              fullWidth={true}
             >
               <MenuItem value={10}>Canned</MenuItem>
               <MenuItem value={20}>Frozen</MenuItem>
