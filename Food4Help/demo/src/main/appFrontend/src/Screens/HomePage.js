@@ -13,7 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "around-space",
     display: "flex",
-    marginRight: theme.spacing(5)
+    marginRight: theme.spacing(5),
   },
 }));
 
@@ -43,6 +43,7 @@ const activeSections = [
   { title: "About Us", url: "/aboutus" },
   { title: "What we do", url: "/whatwedo" },
   { title: "User Profile", url: "/user" },
+  { title: "Chat", url: "/chat" },
 ];
 const sections = [
   { title: "About Us", url: "/aboutus" },
@@ -59,13 +60,14 @@ const sidebar = {
     "We are a group of students that have the determination to help people around the world giving organizations the accesibility to get charity and hand it to those in need.",
 };
 
-
 export default function HomePage() {
   const [comps, setComps] = useState([]);
   const [active, setActive] = useState(false);
   const history = useHistory();
   const [filter, setFilter] = useState("");
   const [companyNames, setCompanyNames] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [counter, setCounter] = useState([]);
 
   const getComps = async () => {
     const result = await axios("http://localhost:8080/api/comps");
@@ -87,35 +89,38 @@ export default function HomePage() {
   const [] = useState([]);
   const [] = useState(true);
 
-  const companyHandleOptions = () => comps.map((item) => (
-    console.log("data for search bar: " + item.name + "is pushed to an array " + companyOptions.push(item.name))
-  ));
+  const companyHandleOptions = () =>
+    comps.map((item) =>
+      console.log(
+        "data for search bar: " +
+          item.name +
+          " is pushed to an array " +
+          companyOptions.push(item.name)
+      )
+    );
 
-  const companyOptions = [
-
-  ];
+  const companyOptions = [];
 
   useEffect(() => {
     companyHandleOptions();
     setCompanyNames(companyOptions);
     console.log(companyOptions);
     console.log("company selected: " + filter);
-  },[comps]);
-
+  }, [comps]);
 
   const onSelectHandler = (e) => {
-    
-    setFilter(e);
-    console.log("On select company: " + filter);
-    console.log("filter is a company?: " + companyOptions.filter(name => name === filter).map(names => names));
+    console.log("On select company: " + e);
+    console.log(
+      "filter is a company?: " +
+        companyOptions.filter((name) => name === filter).map((names) => names)
+    );
     console.log("companyName variable: " + companyNames);
-    
-    if(Cookies.get("LoggedIn") === "true"){
-      history.push("/company?comp=" + `${filter}`)
-      window.location.reload()
+
+    if (Cookies.get("LoggedIn") === "true") {
+      history.push("/company?comp=" + filter);
+      window.location.reload();
     }
-    
-};
+  };
 
   return (
     <React.Fragment>
@@ -133,56 +138,53 @@ export default function HomePage() {
             archives={sidebar.archives}
           />
           <Grid item xs={6} sm={6} alignItems="center" justify="center">
-            <Grid item xs={12} sm={6} className={classes.submit} >
+            <Grid item xs={12} sm={6} className={classes.submit}>
               <Autocomplete
                 options={companyNames}
-                getOptionLabel={option => option}
+                getOptionLabel={(option) => option}
                 style={{ width: 300 }}
-                renderInput={params => (
+                onChange={(e, v) => {
+                  (v === null) ?
+                  (setFilter("")):
+                  (setFilter(v))
+                }}
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Search Company..."
                     variant="outlined"
                     fullWidth
-                    value={filter}
-                    onChange={e => setFilter(e.target.value)}
-                    
+                    onChange={(e) => {
+                      (setFilter(e.target.value))
+                    }}
                   />
                 )}
               />
-              <Button 
-              type="submit"
-              variant="contained"
-              color="primary"
-              onClick={onSelectHandler}
-              
-              >Enter</Button>
             </Grid>
             <Grid item spacing={3} alignItems="center" justify="center">
               <Grid item xs={12} sm={9}>
-                <List>
-                  {comps.map((item) => (
-                    <ListItem
-                      key={`${item.id}`}
-                      button
-                      component="a"
-                      onClick={()=>{
-                        if(Cookies.get("LoggedIn") === "true"){
-                          history.push("/company?comp=" + `${item.name}`)
-                          window.location.reload()
-                        }
-                        else{
-                          history.push("/redirect")
-                        }
-                      }}
-                    >
-                      <ListItemIcon>
-                        <Avatar alt="CompIcon" src={`${item.picUrl}`} />
-                      </ListItemIcon>
-                      <ListItemText primary={`${item.name}`} />
-                    </ListItem>
-                  ))}
-                </List>
+                  <List>
+                    {comps.filter(comp => (filter === "") ? (comp === comp):(comp.name === filter)).map((item) => (
+                      <ListItem
+                        key={`${item.id}`}
+                        button
+                        component="a"
+                        onClick={() => {
+                          if (Cookies.get("LoggedIn") === "true") {
+                            history.push("/company?comp=" + `${item.name}`);
+                            window.location.reload();
+                          } else {
+                            history.push("/redirect");
+                          }
+                        }}
+                      >
+                        <ListItemIcon>
+                          <Avatar alt="CompIcon" src={`${item.picUrl}`} />
+                        </ListItemIcon>
+                        <ListItemText primary={`${item.name}`} />
+                      </ListItem>
+                    ))}
+                  </List>
               </Grid>
             </Grid>
           </Grid>

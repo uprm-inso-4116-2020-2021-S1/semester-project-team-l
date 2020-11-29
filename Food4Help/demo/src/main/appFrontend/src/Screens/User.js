@@ -174,25 +174,6 @@ export default function User() {
                            autoFocus
                          />
                            }
-                           {/* {!isEdit ? 
-                           <Typography type= "password" variant="h6">
-                             Password: {password}
-                           </Typography> : 
-                           <TextField
-                           variant="outlined"
-                           margin="normal"
-                           required
-                           fullWidth
-                           value={password}
-                           type="password"
-                           onChange={passwordChangeHandler}
-                           id="password"
-                           label="Password"
-                           name="password"
-                           autoComplete="password"
-                           autoFocus
-                         />
-                           } */}
                            {!isEdit ? 
                            <Typography variant="h6">
                              Entity: {entity}
@@ -203,25 +184,6 @@ export default function User() {
                            options={entityOptions}
                          />
                            }
-                        {/* //    {!isEdit ? 
-                        //    <Typography variant="h6">
-                        //      Company or Organization: {nameEntity}
-                        //    </Typography> : 
-                        //    <TextField
-                        //    variant="outlined"
-                        //    margin="normal"
-                        //    required  
-                        //    fullWidth
-                        //    value={nameEntity}
-                        //    type="text"
-                        //    onChange={nameEntityChangeHandler}
-                        //    id="nameEntity"
-                        //    label="Name Entity"
-                        //    name="nameEntity"
-                        //    autoComplete="nameEntity"
-                        //    autoFocus
-                        //  />
-                        //    } */}
                            {!isEdit ? 
                            <Typography variant="h6">
                              Phone Number: {phone}
@@ -241,16 +203,6 @@ export default function User() {
                            autoFocus
                          />
                            }
-                           {/* {!isEdit ? 
-                           <Typography variant="h6">
-                             Category Company: {category}
-                           </Typography> : 
-                           <Select
-                           onChange={(e) => setCategory(e.value)}
-                           className={classes.select}
-                           options={companyOptions}
-                         />
-                           } */}
                     </div>
                     <div className={classes.buttonLayout}>
                     {!isEdit ? 

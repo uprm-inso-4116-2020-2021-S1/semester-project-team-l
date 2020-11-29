@@ -46,15 +46,6 @@ public class UserController {
             return "Logged off";
         }
     }
-    @GetMapping("/getStatus")
-    public boolean getStatus(){
-        return loggedIn;
-    }
-
-    @PutMapping("/updateStatus")
-    public boolean updateStatus(@RequestParam boolean status){
-        return loggedIn = status;
-    }
 
     @GetMapping("/sign-in")
     public boolean signIn(@RequestParam String email, @RequestParam String password){
@@ -70,13 +61,6 @@ public class UserController {
         else{
             return (loggedIn = false);
         }
-    }
-
-
-    @GetMapping("/sign-up")
-    public String signUpUser() {
-
-        return "sign-up";
     }
 //      Method to be implemented
 //    @GetMapping("/sign-up/confirm")
