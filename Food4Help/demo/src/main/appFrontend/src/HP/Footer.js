@@ -8,10 +8,10 @@ import Link from '@material-ui/core/Link';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {' '}
+      {'Food4Help '}
       <Link color="inherit" href="https://material-ui.com/">
 
-      </Link>{' '}
+      </Link>{'©'}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -20,7 +20,6 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    backgroundColor: theme.palette.background.paper,
     marginTop: theme.spacing(8),
     padding: theme.spacing(6, 0),
   },

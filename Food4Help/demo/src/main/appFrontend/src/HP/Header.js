@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   toolbarSecondary: {
-    justifyContent: 'space-between',
-    overflowX: 'auto',
+    justifyContent: "space-between",
+    overflowX: "auto",
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -27,14 +27,46 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const { sections, title } = props;
+  const [userID, setUserID] = useState(null);
+  const { title } = props;
+  const [sections, setSections] = useState([]);
+  const history = useHistory();
+  const [active, setActive ] = useState(false);
+
+
+  const checkActive = () => {
+    if(Cookies.get("LoggedIn") === "true"){
+      setActive(true);
+    }
+  }
+
+  const checkUser = () => {
+    if(!Cookies.get("User") === ""){
+      setUserID(Cookies.get("User"))
+    }
+  }
+
+  const loadSections = () => {
+    setSections(props.sections);
+  }
+
+  useEffect(() => {
+    checkActive();
+    checkUser();
+    loadSections();
+  }, [active])
+
+  const signIn = () => {
+    history.push("/login");
+  };
+
 
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-         <Button href="/login" variant="outlined" size="small">
-                   Login
-         </Button>
+        <Button href="/" variant="outlined" size="small">
+          Home
+        </Button>
         <Typography
           component="h2"
           variant="h5"
@@ -45,11 +77,45 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        <IconButton href="/filter">
-          <SearchIcon />
-        </IconButton>
+        {active ? (
+          <div>
+            <Typography>{userID}</Typography>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                Cookies.set("LoggedIn", "false");
+                Cookies.set("User", "");
+                setActive(false);
+                history.push("/")
+                window.location.reload();
+              }}
+            >
+              Log out
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Button href="/signup" variant="outlined" size="small">
+              Sign Up
+            </Button>
+            <Button
+              onClick={() => {
+                signIn();
+              }}
+              variant="outlined"
+              size="small"
+            >
+              Sign In
+            </Button>
+          </div>
+        )}
       </Toolbar>
-      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+      <Toolbar
+        component="nav"
+        variant="dense"
+        className={classes.toolbarSecondary}
+      >
         {sections.map((section) => (
           <Link
             color="inherit"
@@ -70,4 +136,5 @@ export default function Header(props) {
 Header.propTypes = {
   sections: PropTypes.array,
   title: PropTypes.string,
+  auth: PropTypes.bool,
 };

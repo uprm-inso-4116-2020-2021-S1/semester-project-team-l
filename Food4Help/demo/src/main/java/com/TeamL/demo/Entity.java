@@ -20,6 +20,10 @@ public class Entity implements EntityInt {
         this.address = address;
     }
 
+    public Entity(){
+
+    }
+
     public String getEntityEmail() {
         return entityEmail;
     }
@@ -67,12 +71,12 @@ public class Entity implements EntityInt {
     }
 
     @Override
-    public void addFood(Food food) {
+    public void removeFood(Food food) {
 
     }
 
     @Override
-    public void removeFood(Food food) {
+    public void addFood(Food food) {
 
     }
 }

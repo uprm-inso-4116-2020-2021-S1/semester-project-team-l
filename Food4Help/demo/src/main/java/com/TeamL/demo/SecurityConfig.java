@@ -27,19 +27,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
-                .csrf()
-                .disable()
                 .authorizeRequests()
-                .antMatchers("/register/**","/sign-up/**", "/sign-in/**")
-                .permitAll();
+                .antMatchers("/updateStatus","/getStatus","/getUser","/user/*", "/sign-up",
+                        "/sign-in","/api/food", "/api/food/*", "/api/comps", "/api/comps/*", "/",
+                        "/js", "/ws","/ws/*","/ws/**", "/**")
+                    .permitAll()
+            .antMatchers("/**")
+                    .hasAnyRole("ADMIN", "USER")
+                .and()
+                    .csrf()
+                    .disable();
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(bCryptPasswordEncoder());
     }
-
 
 }

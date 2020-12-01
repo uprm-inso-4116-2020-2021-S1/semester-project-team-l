@@ -1,4 +1,5 @@
 package com.TeamL.demo;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,39 +14,65 @@ import java.util.Collections;
 
 @Component
 @Document(collection = "users")
-public class User implements UserDetails
-{
-
-    public static final String GENDER_MALE = "M";
-    public static final String GENDER_FEMALE = "F";
+public class User implements UserDetails {
 
     @Id
     private String id;
     private String firstName;
     private String lastName;
-    @Field("User email")
-    private String userEmail;
+    public String companyName;
+    public String entity;
+    public boolean organization;
+    public String phoneNumber;
+    @Field("email")
+    private String email;
     private String password;
-    private String gender;
-    private int age;
     private Role role = Role.USER;
     private boolean locked = false;
     private boolean enabled = false;
 
     //Constructor
     @PersistenceConstructor
-    public User(String firstName, String lastName, String UserEmail, String gender, int age) {
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userEmail = UserEmail;
-        this.gender = gender;
-        this.age = age;
+        this.email = email;
     }
 
     public User(){
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
 
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getEntity() {
+        return entity;
+    }
+
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
+
+    public boolean isOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(boolean organization) {
+        this.organization = organization;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     //Getter and setter
     public void setPassword(String password) {
@@ -76,28 +103,12 @@ public class User implements UserDetails
         this.lastName = lastName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Role getUserRole() {
@@ -137,7 +148,7 @@ public class User implements UserDetails
 
     @Override
     public String getUsername() {
-        return userEmail;
+        return email;
     }
 
     @Override
