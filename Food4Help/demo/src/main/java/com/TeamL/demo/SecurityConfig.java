@@ -28,11 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/updateStatus","/getStatus","/getUser","/user/*", "/users", "/sign-up",
+                .antMatchers("/updateStatus","/getStatus","/getUser","/user/*", "/sign-up",
                         "/sign-in","/api/food", "/api/food/*", "/api/comps", "/api/comps/*", "/",
                         "/js", "/ws","/ws/*","/ws/**", "/**")
                     .permitAll()
-                .antMatchers("/**")
+            .antMatchers("/**")
                     .hasAnyRole("ADMIN", "USER")
                 .and()
                     .csrf()
@@ -43,6 +43,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService)
                 .passwordEncoder(bCryptPasswordEncoder());
     }
-
 
 }

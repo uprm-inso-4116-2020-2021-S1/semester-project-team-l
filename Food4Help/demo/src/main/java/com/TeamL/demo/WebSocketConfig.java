@@ -14,25 +14,21 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import javax.websocket.server.ServerEndpoint;
 
 @Configuration
-//@Controller
-@EnableWebSocket
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        //registry.setApplicationDestinationPrefixes("/app");
-       // registry.enableSimpleBroker("/topic");
-       //config.setApplicationDestinationPrefixes("/app");
-       // registry.setUserDestinationPrefix("/user");
-        registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/topic/", "/queue/","/user/");
+
+        registry.setApplicationDestinationPrefixes("/app/");
+        registry.enableSimpleBroker("/queue/");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
-        registry.addEndpoint("/ws").setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy())).setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/ws").setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy()))
+                .setAllowedOrigins("*").withSockJS();
     }
 
 }
