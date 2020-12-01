@@ -8,7 +8,7 @@ const WEBSOCKET_URL = "http://localhost:8080/ws";
 // const RECONNECT_DELAY = 3 * 1000;
 
 const PUBLIC_TOPIC = "/queue/";
-const PUBLISH_ENDPOINT = "/app/chat";
+const PUBLISH_ENDPOINT = "/app/chat/";
 
 export default class MessageApp extends React.Component {
   state = {

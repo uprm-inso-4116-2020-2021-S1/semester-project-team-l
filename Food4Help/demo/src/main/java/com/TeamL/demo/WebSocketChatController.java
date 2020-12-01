@@ -28,7 +28,7 @@ public class WebSocketChatController{
 
     }
 
-    @MessageMapping("/chat/")
+    @MessageMapping("chat/")
     @SendTo("/queue/")
     public Message sendMessage(@Payload Message message){
 
