@@ -50,7 +50,7 @@ const sections = [
 ];
 
 const photo = {
-  image: "http://via.placeholder.com/1232x123",
+  image: "https://www.diabetes.co.uk/wp-content/uploads/2019/01/iStock-10131071761-1.jpg",
 };
 
 const sidebar = {
